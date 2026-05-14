@@ -100,7 +100,7 @@ Looking forward to your response. Thank you!`
             {[
               { icon: FiMapPin, title: 'Location', detail: '146A, Sea Street Galle, Sri Lanka', link: 'https://www.google.com/maps?ll=6.031208,80.221283&z=15&t=m&hl=en-US&gl=US&mapclient=embed&q=The+Ceylon+Tea+Experience+-+Galle,+146A+Sea+Street,+Galle', isLongText: false },
               { icon: FiPhone, title: 'Phone', detail: '(+94) 70 290 0500', link: 'tel:+94702900500', isLongText: false },
-              { icon: FiMail, title: 'Email', detail: 'info@ceylonteaexperience.com', link: 'mailto:info@ceylonteaexperience.com', isLongText: true },
+              { icon: FiMail, title: 'Email', detail: 'reservations@theceylonteaexperience.com', link: 'mailto:reservations@theceylonteaexperience.com', isLongText: true },
               { icon: FiGlobe, title: 'Website', detail: 'www.theceylonteaexperience.com', link: 'https://www.theceylonteaexperience.com', isLongText: true },
               { icon: FiClock, title: 'Opening Hours', detail: 'Daily – 9.00 AM to 7.00 PM', link: null, isLongText: false }
             ].map((item, idx) => {
@@ -153,8 +153,8 @@ Looking forward to your response. Thank you!`
               <div className="space-y-10">
                 {[
                   { icon: '📍', label: 'Address', value: '146A, Sea Street, Galle 80000, Sri Lanka' },
-                  { icon: '✉️', label: 'Email', value: 'info@ceylonteaexperience.com' },
-                  { icon: '📞', label: 'Phone', value: '(+94) 70 290 0500' }
+                  { icon: '✉️', label: 'Email', value: 'reservations@theceylonteaexperience.com' },
+                  { icon: '📞', label: 'Phone', value: '(+94) 702 900 500' }
                 ].map((item, idx) => (
                   <div key={idx} className="flex gap-6 items-start">
                     <span className="text-2xl mt-1 opacity-80">{item.icon}</span>

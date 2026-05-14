@@ -140,7 +140,7 @@ export default function PrivacyPolicy({ navigate }) {
                 </p>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-6">
                 <a 
-                    href="mailto:info@ceylonteaexperience.com" 
+                    href="mailto:reservations@theceylonteaexperience.com" 
                     className="flex items-center gap-3 bg-[#8d8b4e] hover:bg-white text-white hover:text-[#595a30] px-10 py-4 rounded-full font-bold transition-all shadow-lg"
                 >
                     <Mail size={18} />
@@ -149,10 +149,10 @@ export default function PrivacyPolicy({ navigate }) {
                 <span className="text-gray-300 hidden md:block">or</span>
                 
                 <a 
-                    href="mailto:info@ceylonteaexperience.com"
+                    href="mailto:reservations@theceylonteaexperience.com"
                     className="text-white font-medium hover:text-gray-200 transition-colors hover:underline underline-offset-4"
                 >
-                    info@ceylonteaexperience.com
+                    reservations@theceylonteaexperience.com
                 </a>
                 </div>
             </div>
