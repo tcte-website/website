@@ -1,9 +1,8 @@
 import { useState } from 'react';
+import { openWhatsApp } from './WhatsAppModal';
 
 function WhatsAppFloatingButton() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const phoneNumber = '94702900500';
   
   const inquiryOptions = [
     {
@@ -45,9 +44,8 @@ function WhatsAppFloatingButton() {
   ];
 
   const handleOptionClick = (message) => {
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
     setIsOpen(false);
+    openWhatsApp(message);
   };
 
   return (

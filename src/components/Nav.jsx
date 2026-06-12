@@ -42,7 +42,7 @@ export default function Nav({ navigate, currentPage }) {
           ))}
         </ul>
 
-        {/* Prominent Book Now CTA — opens WhatsApp inquiry modal */}
+        {/* Prominent Book Now CTA */}
         <button
           onClick={() => setWaModalOpen(true)}
           className="hidden md:block bg-[#2D6A2D] text-white px-6 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#1A3D1A] transition cursor-pointer rounded-sm shadow-md"
@@ -71,9 +71,9 @@ export default function Nav({ navigate, currentPage }) {
               </div>
             ))}
             <div className="px-8 py-6">
-              {/* Mobile Book Now — also opens WhatsApp inquiry modal */}
+              {/* Mobile Book Now */}
               <button
-                onClick={() => { setWaModalOpen(true); setMenuOpen(false) }}
+                onClick={() => { setWaModalOpen(true); setMenuOpen(false); }}
                 className="w-full bg-[#2D6A2D] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-sm shadow-md"
               >
                 Book Now
@@ -83,8 +83,10 @@ export default function Nav({ navigate, currentPage }) {
         )}
       </nav>
 
-      {/* Shared WhatsApp Inquiry Modal */}
-      <WhatsAppInquiryModal isOpen={waModalOpen} onClose={() => setWaModalOpen(false)} />
+      <WhatsAppInquiryModal
+        isOpen={waModalOpen}
+        onClose={() => setWaModalOpen(false)}
+      />
     </>
   )
 }

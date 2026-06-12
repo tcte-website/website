@@ -3,12 +3,11 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import { FiMapPin, FiPhone, FiMail, FiGlobe, FiClock } from 'react-icons/fi';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
-import { WhatsAppInquiryModal } from '../components/WhatsAppModal';
+import { openWhatsApp } from '../components/WhatsAppModal';
 
 export default function ContactPage({ navigate }) {
   const [form, setForm] = useState({ name: '', email: '', date: '', type: 'Private Tasting Event', message: '' })
   const [submitted, setSubmitted] = useState(false)
-  const [waModalOpen, setWaModalOpen] = useState(false);
 
   // Format date for readable display in WhatsApp message
   const formatDate = (dateString) => {
@@ -40,15 +39,8 @@ ${form.message}
 
 Looking forward to your response. Thank you!`
 
-    // Encode the message for URL
-    const encodedMessage = encodeURIComponent(message)
-    
-    // WhatsApp number (no + or spaces)
-    const phoneNumber = '94702900500'
-    
-    // Open WhatsApp with pre-filled message in a new tab
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank')
-    
+    openWhatsApp(message)
+
     // Show thank-you confirmation
     setSubmitted(true)
     
@@ -410,8 +402,6 @@ Looking forward to your response. Thank you!`
         <WhatsAppFloatingButton />
       </div>
 
-      {/* Shared WhatsApp Inquiry Modal — opens from any service "Book" button */}
-      <WhatsAppInquiryModal isOpen={waModalOpen} onClose={() => setWaModalOpen(false)} />
       </div>
 
       <Footer navigate={navigate} />

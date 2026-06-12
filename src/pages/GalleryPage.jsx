@@ -2,8 +2,6 @@ import React, { useState, useRef } from 'react';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
-import { WhatsAppInquiryModal } from '../components/WhatsAppModal';
-
 
 const categories = ["All Collections", "Tea Making Experience", "Tea Library", "Café", "Events/Groups"];
 
@@ -95,8 +93,6 @@ export default function GalleryPage({ navigate }) {
   const [activeCategory, setActiveCategory] = useState("All Collections");
   const [lightbox, setLightbox] = useState(null);
   const sliderRef = useRef(null);
-  const [waModalOpen, setWaModalOpen] = useState(false);
-
   // Filter logic
   const filtered = activeCategory === "All Collections"
     ? allPhotos.filter(p => !p.featured)
@@ -358,13 +354,7 @@ export default function GalleryPage({ navigate }) {
         </div>
       </section>
       <div className="fixed bottom-8 right-8 z-50">
-        {/* Floating WhatsApp Button (component-based) */}
-      <div className="fixed bottom-8 right-8 z-50">
         <WhatsAppFloatingButton />
-      </div>
-
-      {/* Shared WhatsApp Inquiry Modal — opens from any service "Book" button */}
-      <WhatsAppInquiryModal isOpen={waModalOpen} onClose={() => setWaModalOpen(false)} />
       </div>
 
       <Footer navigate={navigate} />

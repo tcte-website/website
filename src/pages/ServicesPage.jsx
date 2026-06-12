@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
@@ -86,7 +86,7 @@ export default function ServicesPage({ navigate }) {
 
               <div className="pt-6 border-t border-gray-200">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                  <button 
+                  <button
                     onClick={() => setWaModalOpen(true)}
                     className="w-full sm:w-auto inline-block text-center whitespace-nowrap border-2 border-[#2D6A2D] text-[#2D6A2D] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2D6A2D] hover:text-white transition shadow-sm rounded-sm cursor-pointer"
                   >
@@ -136,7 +136,7 @@ export default function ServicesPage({ navigate }) {
 
               <div className="pt-6 border-t border-gray-200">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <button 
+                  <button
                     onClick={() => setWaModalOpen(true)}
                     className="w-full sm:w-auto inline-block text-center whitespace-nowrap border-2 border-[#2D6A2D] text-[#2D6A2D] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2D6A2D] hover:text-white transition shadow-sm rounded-sm cursor-pointer"
                   >
@@ -199,7 +199,7 @@ export default function ServicesPage({ navigate }) {
 
               <div className="pt-6 border-t border-gray-200">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <button 
+                  <button
                     onClick={() => setWaModalOpen(true)}
                     className="w-full sm:w-auto inline-block text-center whitespace-nowrap border-2 border-[#2D6A2D] text-[#2D6A2D] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2D6A2D] hover:text-white transition shadow-sm rounded-sm cursor-pointer"
                   >
@@ -235,7 +235,7 @@ export default function ServicesPage({ navigate }) {
 
               <div className="pt-6 border-t border-gray-200">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <button 
+                  <button
                     onClick={() => setWaModalOpen(true)}
                     className="w-full sm:w-auto border-2 border-[#2D6A2D] text-[#2D6A2D] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2D6A2D] hover:text-white transition shadow-sm rounded-sm cursor-pointer"
                   >
@@ -289,7 +289,7 @@ export default function ServicesPage({ navigate }) {
 
               <div className="pt-2 border-t border-gray-200">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-4">
-                  <button 
+                  <button
                     onClick={() => setWaModalOpen(true)}
                     className="w-full sm:w-auto inline-block text-center whitespace-nowrap border-2 border-[#2D6A2D] text-[#2D6A2D] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2D6A2D] hover:text-white transition shadow-sm rounded-sm cursor-pointer"
                   >
@@ -332,7 +332,7 @@ export default function ServicesPage({ navigate }) {
 
               <div className="pt-6 border-t border-gray-200">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <button 
+                  <button
                     onClick={() => setWaModalOpen(true)}
                     className="w-full sm:w-auto inline-block text-center whitespace-nowrap border-2 border-[#2D6A2D] text-[#2D6A2D] px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-[#2D6A2D] hover:text-white transition shadow-sm rounded-sm cursor-pointer"
                   >
@@ -380,10 +380,12 @@ export default function ServicesPage({ navigate }) {
         <WhatsAppFloatingButton />
       </div>
 
-      {/* Shared WhatsApp Inquiry Modal — opens from any service "Book" button */}
-      <WhatsAppInquiryModal isOpen={waModalOpen} onClose={() => setWaModalOpen(false)} />
-
       <Footer navigate={navigate} />
+
+      <WhatsAppInquiryModal
+        isOpen={waModalOpen}
+        onClose={() => setWaModalOpen(false)}
+      />
     </div>
   );
 }

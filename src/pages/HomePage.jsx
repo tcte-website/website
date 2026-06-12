@@ -511,7 +511,10 @@ export default function HomePage({ navigate }) {
             Your journey into Sri Lanka's most iconic heritage begins here.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mb-10">
-            <button onClick={() => setWaModalOpen(true)} className="bg-[#B8960C] text-white px-10 py-4 text-sm font-sans font-bold uppercase tracking-wider hover:bg-[#9a7d0a] transition rounded-sm shadow-lg">
+            <button
+              onClick={() => setWaModalOpen(true)}
+              className="bg-[#B8960C] text-white px-10 py-4 text-sm font-sans font-bold uppercase tracking-wider hover:bg-[#9a7d0a] transition rounded-sm shadow-lg"
+            >
               Book Your Experience
             </button>
             <button onClick={() => navigate('contact')} className="border-2 border-white text-white px-10 py-4 text-sm font-sans font-bold uppercase tracking-wider hover:bg-white/10 transition rounded-sm">
@@ -528,10 +531,12 @@ export default function HomePage({ navigate }) {
         <WhatsAppFloatingButton />
       </div>
 
-      {/* Shared WhatsApp Inquiry Modal — opens from any "Book"/"Explore" button */}
-      <WhatsAppInquiryModal isOpen={waModalOpen} onClose={() => setWaModalOpen(false)} />
-
       <Footer navigate={navigate} />
+
+      <WhatsAppInquiryModal
+        isOpen={waModalOpen}
+        onClose={() => setWaModalOpen(false)}
+      />
     </div>
   )
 }

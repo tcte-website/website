@@ -1,8 +1,28 @@
-import { useState } from 'react';
+const WA_NUMBER = '94702900500';
+const GTAG_CONVERSION_ID = 'AW-18215949162/6BQqCIeturkcEOqmhe5d';
+
+export function openWhatsApp(message) {
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        send_to: GTAG_CONVERSION_ID,
+        value: 1.0,
+        currency: 'USD',
+        event_callback: () => window.open(url, '_blank', 'noopener,noreferrer'),
+      });
+      return;
+    }
+  } catch (e) {
+    console.warn('[TCTE] gtag error:', e);
+  }
+
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
 
 // Shared modal component — can be triggered from anywhere
 export function WhatsAppInquiryModal({ isOpen, onClose }) {
-  const phoneNumber = '94702900500';
   
   const inquiryOptions = [
     {
@@ -44,9 +64,8 @@ export function WhatsAppInquiryModal({ isOpen, onClose }) {
   ];
 
   const handleOptionClick = (message) => {
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
     onClose();
+    openWhatsApp(message);
   };
 
   if (!isOpen) return null;
