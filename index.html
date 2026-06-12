@@ -1,63 +1,44 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B23WLR63LD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google Tag (Analytics + Google Ads) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B23WLR63LD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-  gtag('config', 'G-B23WLR63LD');
-</script>
+      gtag("js", new Date());
+
+      // Google Analytics
+      gtag("config", "G-B23WLR63LD");
+
+      // Google Ads
+      gtag("config", "AW-18215949162");
+    </script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/webp" href="./logo.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- SEO -->
     <title>The Ceylon Tea Experience | Hand-Made Ceylon Tea in Galle</title>
-    <meta name="description" content="Discover the art of Ceylon Tea at TCTE — Sri Lanka's first interactive tea experience in Galle. Hand-pluck, blend, and craft your own tea, just minutes from Galle Fort." />
-    
+
+    <meta
+      name="description"
+      content="Discover the art of Ceylon Tea at TCTE — Sri Lanka's first interactive tea experience in Galle. Hand-pluck, blend, and craft your own tea, just minutes from Galle Fort."
+    />
+
     <!-- Pinterest Domain Verification -->
-    <meta name="p:domain_verify" content="2bdbaf83920d9bc9017546c1189df9d1"/>
-    
-    <!-- ============================================== -->
-    <!-- Google Analytics (GA4)                         -->
-    <!-- TODO: Replace G-XXXXXXXXXX with actual         -->
-    <!-- Measurement ID provided by client after        -->
-    <!-- website is hosted.                             -->
-    <!-- Uncomment the script block below once ready.   -->
-    <!-- ============================================== -->
-    
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
-    
+    <meta
+      name="p:domain_verify"
+      content="2bdbaf83920d9bc9017546c1189df9d1"
+    />
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>
-
-
-
-
-
-<!-- Google Analytics (GA4) -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K9F2Q3P4R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-7K9F2Q3P4R');
-</script> -->
-
-<!-- Commit Message 
-chore: add Google Analytics placeholder for future integration -->
