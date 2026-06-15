@@ -3,6 +3,7 @@
   <head>
     <!-- Google Tag (Analytics + Google Ads) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B23WLR63LD"></script>
+
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -18,7 +19,25 @@
       gtag("config", "AW-18215949162");
     </script>
 
-    <!-- Conversion tracking handled by WhatsAppModal.jsx openWhatsApp() — do not restore gtag_report_conversion -->
+    <!-- Google Ads Conversion Tracking Function -->
+    <script>
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != "undefined") {
+            window.location = url;
+          }
+        };
+
+        gtag("event", "conversion", {
+          send_to: "AW-18215949162/6BQqCIeturkcEOqmhe5d",
+          value: 1.0,
+          currency: "USD",
+          event_callback: callback
+        });
+
+        return false;
+      }
+    </script>
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/webp" href="./logo.webp" />
@@ -41,6 +60,7 @@
 
   <body>
     <div id="root"></div>
+
     <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>

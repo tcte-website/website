@@ -1,18 +1,11 @@
 const WA_NUMBER = '94702900500';
-const GTAG_CONVERSION_ID = 'AW-18215949162/6BQqCIeturkcEOqmhe5d';
 
 export function openWhatsApp(message) {
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 
   try {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'conversion', {
-        send_to: GTAG_CONVERSION_ID,
-        value: 1.0,
-        currency: 'USD',
-        event_callback: () => window.open(url, '_blank', 'noopener,noreferrer'),
-      });
-      return;
+    if (typeof window.gtag_report_conversion === 'function') {
+      window.gtag_report_conversion();
     }
   } catch (e) {
     console.warn('[TCTE] gtag error:', e);
