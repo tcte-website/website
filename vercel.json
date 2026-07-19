@@ -1,0 +1,41 @@
+{
+  "rewrites": [
+    {
+      "source": "/partners",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/partners/",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/partners",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        }
+      ]
+    },
+    {
+      "source": "/partners/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        }
+      ]
+    },
+    {
+      "source": "/downloads/partners/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        }
+      ]
+    }
+  ]
+}
