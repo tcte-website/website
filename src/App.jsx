@@ -7,6 +7,7 @@ import ContactPage from './pages/ContactPage'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import RefundPolicy from './pages/RefundPolicy'
 import TermsConditions from './pages/TermsConditions'
+import PartnersPage from './pages/PartnersPage'
 import Loading from './components/Loading'
 import './App.css'
 
@@ -17,8 +18,14 @@ function getPageFromHash() {
   return validPages.includes(hash) ? hash : 'home'
 }
 
+function getIsPartnersRoute() {
+  const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
+  return pathname === '/partners'
+}
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState(getPageFromHash)
+  const [isPartnersRoute, setIsPartnersRoute] = useState(getIsPartnersRoute)
   
   const [isLoading, setIsLoading] = useState(true)
 
@@ -55,10 +62,13 @@ export default function App() {
     }
     
     window.addEventListener('hashchange', handleHashChange)
+    const handlePopState = () => setIsPartnersRoute(getIsPartnersRoute())
+    window.addEventListener('popstate', handlePopState)
     
     return () => {
       clearTimeout(initialTimer)
       window.removeEventListener('hashchange', handleHashChange)
+      window.removeEventListener('popstate', handlePopState)
     }
   }, [currentPage])
 
@@ -71,6 +81,10 @@ export default function App() {
     privacy: <PrivacyPolicy navigate={navigate} />,
     refund: <RefundPolicy navigate={navigate} />,
     terms: <TermsConditions navigate={navigate} />,
+  }
+
+  if (isPartnersRoute) {
+    return <PartnersPage />
   }
 
   if (isLoading) {
