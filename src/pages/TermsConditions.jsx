@@ -88,7 +88,7 @@ export default function TermsConditions({ navigate }) {
       <Nav navigate={navigate} />
 
       {/* Premium Hero Section - Updated to matched balanced Olive Green theme */}
-      <div className="relative pt-32 pb-24 px-8 overflow-hidden bg-gradient-to-r from-[#5c5d31] via-[#6e6f3b] to-[#5c5d31]">
+      <div id="main-content" className="relative pt-32 pb-24 px-8 overflow-hidden bg-gradient-to-r from-[#5c5d31] via-[#6e6f3b] to-[#5c5d31]">
         <div className="absolute inset-0">
             <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] opacity-10 pointer-events-none" />
             <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[80%] rounded-full bg-[#828045] blur-[120px] opacity-30" />
@@ -125,7 +125,7 @@ export default function TermsConditions({ navigate }) {
 
         {/* Dynamic Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {sections.map((section, index) => (
+          {sections.map((section) => (
             <div 
               key={section.title} 
               className="bg-white border border-gray-50 rounded-[2rem] p-8 md:p-10 shadow-sm hover:shadow-2xl hover:shadow-[#8d8b4e]/10 transition-all duration-500 group"
@@ -184,10 +184,10 @@ export default function TermsConditions({ navigate }) {
                 If you need clarification regarding our terms, our administrative team is ready to assist.
             </p>
             <a 
-                href="mailto:info@ceylonteaexperience.com" 
+                href="mailto:reservations@theceylonteaexperience.com"
                 className="text-lg font-semibold text-[#8d8b4e] hover:text-[#595a30] transition-colors underline underline-offset-8"
             >
-                info@ceylonteaexperience.com
+                reservations@theceylonteaexperience.com
             </a>
         </div>
       </div>

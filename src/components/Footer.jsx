@@ -7,7 +7,7 @@ export default function Footer({ navigate }) {
         
         {/* Brand & Location Info */}
         <div>
-          <h3 className="text-xl font-serif text-[#B8960C] font-bold mb-4 leading-tight">
+          <h3 className="text-xl font-serif text-[#D3AE24] font-bold mb-4 leading-tight">
             THE CEYLON TEA<br />EXPERIENCE
           </h3>
           <p className="mb-6 text-xs leading-relaxed text-gray-400">
@@ -22,7 +22,7 @@ export default function Footer({ navigate }) {
               href="https://www.google.com/maps/place/The+Ceylon+Tea+Experience+-+Galle/data=!4m7!3m6!1s0x3ae1736b35262d13:0x993881923260c1bd!8m2!3d6.0371585!4d80.2245897!16s%2Fg%2F11ytzjgzgf!19sChIJEy0mNWtz4ToRvcFgMpKBOJk?authuser=0&hl=en&rclk=1" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="inline-flex items-center gap-1.5 text-[#B8960C] hover:text-white transition text-xs font-bold uppercase tracking-wider"
+              className="inline-flex items-center gap-1.5 text-[#D3AE24] hover:text-white transition text-xs font-bold uppercase tracking-wider"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" />
@@ -128,7 +128,7 @@ export default function Footer({ navigate }) {
       </div>
       
       {/* Copyright */}
-      <div className="max-w-md mx-auto text-center mt-4 pt-4 border-t border-gray-700/50 text-[10px] tracking-widest uppercase text-gray-500">
+      <div className="max-w-md mx-auto text-center mt-4 pt-4 border-t border-gray-700/50 text-[10px] tracking-widest uppercase text-gray-300">
         © {new Date().getFullYear()} EXPACE PVT LTD. All rights reserved. 
       </div>
     </footer>

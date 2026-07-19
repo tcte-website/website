@@ -1,17 +1,30 @@
-import { useState, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import HomePage from './pages/HomePage'
-import AboutPage from './pages/AboutPage'
-import ServicesPage from './pages/ServicesPage'
-import GalleryPage from './pages/GalleryPage'
-import ContactPage from './pages/ContactPage'
-import PrivacyPolicy from './pages/PrivacyPolicy'
-import RefundPolicy from './pages/RefundPolicy'
-import TermsConditions from './pages/TermsConditions'
-import PartnersPage from './pages/PartnersPage'
 import Loading from './components/Loading'
+import PageMetadata from './components/PageMetadata'
 import './App.css'
 
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const GalleryPage = lazy(() => import('./pages/GalleryPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
+const RefundPolicy = lazy(() => import('./pages/RefundPolicy'))
+const TermsConditions = lazy(() => import('./pages/TermsConditions'))
+const PartnersPage = lazy(() => import('./pages/PartnersPage'))
+
 const validPages = ['home', 'about', 'services', 'gallery', 'contact', 'privacy', 'refund', 'terms']
+
+const publicPages = {
+  home: HomePage,
+  about: AboutPage,
+  services: ServicesPage,
+  gallery: GalleryPage,
+  contact: ContactPage,
+  privacy: PrivacyPolicy,
+  refund: RefundPolicy,
+  terms: TermsConditions,
+}
 
 function getPageFromHash() {
   const hash = window.location.hash.replace('#', '').replace('/', '').trim()
@@ -26,152 +39,47 @@ function getIsPartnersRoute() {
 export default function App() {
   const [currentPage, setCurrentPage] = useState(getPageFromHash)
   const [isPartnersRoute, setIsPartnersRoute] = useState(getIsPartnersRoute)
-  
-  const [isLoading, setIsLoading] = useState(true)
 
   const navigate = (page) => {
-    setIsLoading(true)
-    
+    if (!validPages.includes(page)) return
+
     window.location.hash = page
     setCurrentPage(page)
     window.scrollTo({ top: 0, behavior: 'smooth' })
-
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1500) 
   }
 
   useEffect(() => {
-
-    const initialTimer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2500)
-
     const handleHashChange = () => {
-      const newPage = getPageFromHash()
-     
-      if (newPage !== currentPage) {
-        setIsLoading(true)
-        setCurrentPage(newPage)
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-        
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 1500)
-      }
+      setCurrentPage(getPageFromHash())
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-    
-    window.addEventListener('hashchange', handleHashChange)
     const handlePopState = () => setIsPartnersRoute(getIsPartnersRoute())
+
+    window.addEventListener('hashchange', handleHashChange)
     window.addEventListener('popstate', handlePopState)
-    
+
     return () => {
-      clearTimeout(initialTimer)
       window.removeEventListener('hashchange', handleHashChange)
       window.removeEventListener('popstate', handlePopState)
     }
-  }, [currentPage])
-
-  const pages = {
-    home: <HomePage navigate={navigate} />,
-    about: <AboutPage navigate={navigate} />,
-    services: <ServicesPage navigate={navigate} />,
-    gallery: <GalleryPage navigate={navigate} />,
-    contact: <ContactPage navigate={navigate} />,
-    privacy: <PrivacyPolicy navigate={navigate} />,
-    refund: <RefundPolicy navigate={navigate} />,
-    terms: <TermsConditions navigate={navigate} />,
-  }
+  }, [])
 
   if (isPartnersRoute) {
-    return <PartnersPage />
+    return (
+      <Suspense fallback={<Loading />}>
+        <PartnersPage />
+      </Suspense>
+    )
   }
 
-  if (isLoading) {
-    return <Loading />
-  }
+  const CurrentPage = publicPages[currentPage] ?? HomePage
 
-  return pages[currentPage] || pages.home
+  return (
+    <>
+      <PageMetadata page={currentPage} />
+      <Suspense fallback={<Loading />}>
+        <CurrentPage navigate={navigate} />
+      </Suspense>
+    </>
+  )
 }
-
-
-// import { useState, useEffect } from 'react'
-// import HomePage from './pages/HomePage'
-// import AboutPage from './pages/AboutPage'
-// import ServicesPage from './pages/ServicesPage'
-// import GalleryPage from './pages/GalleryPage'
-// import ContactPage from './pages/ContactPage'
-// import PrivacyPolicy from './pages/PrivacyPolicy'
-// import RefundPolicy from './pages/RefundPolicy'
-// import TermsConditions from './pages/TermsConditions'
-// import './App.css'
-
-// const validPages = ['home', 'about', 'services', 'gallery', 'contact', 'privacy', 'refund', 'terms']
-
-// function getPageFromHash() {
-//   const hash = window.location.hash.replace('#', '').replace('/', '').trim()
-//   return validPages.includes(hash) ? hash : 'home'
-// }
-
-// export default function App() {
-//   const [currentPage, setCurrentPage] = useState(getPageFromHash)
-
-//   const navigate = (page) => {
-//     window.location.hash = page
-//     setCurrentPage(page)
-//     window.scrollTo({ top: 0, behavior: 'smooth' })
-//   }
-
-//   useEffect(() => {
-//     const handleHashChange = () => {
-//       setCurrentPage(getPageFromHash())
-//       window.scrollTo({ top: 0, behavior: 'smooth' })
-//     }
-//     window.addEventListener('hashchange', handleHashChange)
-//     return () => window.removeEventListener('hashchange', handleHashChange)
-//   }, [])
-
-//   const pages = {
-//     home: <HomePage navigate={navigate} />,
-//     about: <AboutPage navigate={navigate} />,
-//     services: <ServicesPage navigate={navigate} />,
-//     gallery: <GalleryPage navigate={navigate} />,
-//     contact: <ContactPage navigate={navigate} />,
-//     privacy: <PrivacyPolicy navigate={navigate} />,
-//     refund: <RefundPolicy navigate={navigate} />,
-//     terms: <TermsConditions navigate={navigate} />,
-//   }
-
-//   return pages[currentPage] || pages.home
-// }
-
-
-// import { useState } from 'react'
-// import HomePage from './pages/HomePage'
-// import AboutPage from './pages/AboutPage'
-// import ServicesPage from './pages/ServicesPage'
-// import GalleryPage from './pages/GalleryPage'
-// import ContactPage from './pages/ContactPage'
-// import PrivacyPolicy from './pages/PrivacyPolicy'
-// import RefundPolicy from './pages/RefundPolicy'
-// import TermsConditions from './pages/TermsConditions'
-// import './App.css'
-
-// export default function App() {
-//   const [currentPage, setCurrentPage] = useState('home')
-
-//   const navigate = (page) => setCurrentPage(page)
-
-//   const pages = {
-//     home: <HomePage navigate={navigate} />,
-//     about: <AboutPage navigate={navigate} />,
-//     services: <ServicesPage navigate={navigate} />,
-//     gallery: <GalleryPage navigate={navigate} />,
-//     contact: <ContactPage navigate={navigate} />,
-//     privacy: <PrivacyPolicy navigate={navigate} />,
-//     refund: <RefundPolicy navigate={navigate} />,
-//     terms: <TermsConditions navigate={navigate} />,
-//   }
-
-//   return pages[currentPage] || pages.home
-// }

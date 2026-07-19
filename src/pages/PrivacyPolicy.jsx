@@ -69,7 +69,7 @@ export default function PrivacyPolicy({ navigate }) {
       <Nav navigate={navigate} />
 
       {/* Hero Section - Updated to match the Refund Policy colors */}
-      <div className="relative pt-32 pb-24 px-8 overflow-hidden bg-gradient-to-r from-[#5c5d31] via-[#6e6f3b] to-[#5c5d31]">
+      <div id="main-content" className="relative pt-32 pb-24 px-8 overflow-hidden bg-gradient-to-r from-[#5c5d31] via-[#6e6f3b] to-[#5c5d31]">
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[80%] rounded-full bg-[#828045] blur-[120px] opacity-30" />
           <div className="absolute -bottom-[20%] -right-[10%] w-[40%] h-[70%] rounded-full bg-[#464724] blur-[100px] opacity-20" />

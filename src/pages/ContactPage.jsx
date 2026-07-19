@@ -3,10 +3,10 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import { FiMapPin, FiPhone, FiMail, FiGlobe, FiClock } from 'react-icons/fi';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
-import { openWhatsApp } from '../components/WhatsAppModal';
+import { openWhatsApp } from '../utils/whatsapp';
 
 export default function ContactPage({ navigate }) {
-  const [form, setForm] = useState({ name: '', email: '', date: '', type: 'Private Tasting Event', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', date: '', type: 'Hand-Made Tea & Tasting', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
   // Format date for readable display in WhatsApp message
@@ -46,7 +46,7 @@ Looking forward to your response. Thank you!`
     
     // Reset form after a brief delay
     setTimeout(() => {
-      setForm({ name: '', email: '', date: '', type: 'Private Tasting Event', message: '' })
+      setForm({ name: '', email: '', date: '', type: 'Hand-Made Tea & Tasting', message: '' })
     }, 1000)
   }
 
@@ -55,11 +55,13 @@ Looking forward to your response. Thank you!`
       <Nav navigate={navigate} currentPage="contact" />
 
       {/* Hero - SECTION UNCHANGED AS REQUESTED */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section id="main-content" className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/22.webp" 
             alt="Ceylon Tea Garden" 
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover scale-105"
           />
           <div className="absolute inset-0 bg-black/40"></div>
@@ -236,9 +238,11 @@ Looking forward to your response. Thank you!`
                   {/* Row 1: Name & Email */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="group">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Full Name</label>
+                      <label htmlFor="contact-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Full Name</label>
                       <input
+                        id="contact-name"
                         type="text"
+                        autoComplete="name"
                         placeholder="Augustina Pereira"
                         required
                         value={form.name}
@@ -247,9 +251,11 @@ Looking forward to your response. Thank you!`
                       />
                     </div>
                     <div className="group">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Email Address</label>
+                      <label htmlFor="contact-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Email Address</label>
                       <input
+                        id="contact-email"
                         type="email"
+                        autoComplete="email"
                         placeholder="you@example.com"
                         required
                         value={form.email}
@@ -262,8 +268,9 @@ Looking forward to your response. Thank you!`
                   {/* Row 2: Date of Visit & Inquiry Type */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="group">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Date of Visit</label>
+                      <label htmlFor="contact-date" className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Date of Visit</label>
                       <input
+                        id="contact-date"
                         type="date"
                         required
                         value={form.date}
@@ -272,8 +279,9 @@ Looking forward to your response. Thank you!`
                       />
                     </div>
                     <div className="group">
-                      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Inquiry Type</label>
+                      <label htmlFor="contact-inquiry-type" className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Inquiry Type</label>
                       <select 
+                        id="contact-inquiry-type"
                         value={form.type}
                         onChange={(e) => setForm({ ...form, type: e.target.value })}
                         className="w-full bg-gray-50 border-none px-6 py-4 rounded-xl focus:ring-2 focus:ring-[#1b3b22]/20 transition-all outline-none text-sm appearance-none text-gray-600"
@@ -290,8 +298,9 @@ Looking forward to your response. Thank you!`
 
                   {/* Message */}
                   <div className="group">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Your Message</label>
+                    <label htmlFor="contact-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 block transition-colors group-focus-within:text-[#1b3b22]">Your Message</label>
                     <textarea
+                      id="contact-message"
                       rows={5}
                       placeholder="How may we assist you today?"
                       required
@@ -398,9 +407,7 @@ Looking forward to your response. Thank you!`
 
       <div className="fixed bottom-8 right-8 z-50">
         {/* Floating WhatsApp Button (component-based) */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <WhatsAppFloatingButton />
-      </div>
+      <WhatsAppFloatingButton />
 
       </div>
 

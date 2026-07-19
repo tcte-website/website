@@ -12,11 +12,13 @@ export default function ServicesPage({ navigate }) {
       <Nav navigate={navigate} currentPage="services" />
 
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section id="main-content" className="relative h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/17.webp" 
             alt="Ceylon Tea Garden" 
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#1A3D1A]/80 to-black/50"></div>
@@ -376,9 +378,7 @@ export default function ServicesPage({ navigate }) {
       </section>
 
       {/* Floating WhatsApp Button (component-based) */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <WhatsAppFloatingButton />
-      </div>
+      <WhatsAppFloatingButton />
 
       <Footer navigate={navigate} />
 

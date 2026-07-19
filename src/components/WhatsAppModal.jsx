@@ -1,60 +1,52 @@
-const WA_NUMBER = '94702900500';
-
-export function openWhatsApp(message) {
-  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
-
-  try {
-    if (typeof window.gtag_report_conversion === 'function') {
-      window.gtag_report_conversion();
-    }
-  } catch (e) {
-    console.warn('[TCTE] gtag error:', e);
-  }
-
-  window.open(url, '_blank', 'noopener,noreferrer');
-}
+import { useEffect, useRef } from 'react'
+import { inquiryOptions, openWhatsApp } from '../utils/whatsapp'
 
 // Shared modal component — can be triggered from anywhere
 export function WhatsAppInquiryModal({ isOpen, onClose }) {
-  
-  const inquiryOptions = [
-    {
-      icon: '🍃',
-      title: 'Hand-Made Tea & Tasting',
-      desc: '60-min guided hands-on session',
-      message: "Hi TCTE! I'm interested in the Hand-Made Tea & Tasting experience. Could you please share available time slots, pricing, and what the session includes?"
-    },
-    {
-      icon: '🌱',
-      title: 'Plantation Tour',
-      desc: 'Walk through Ceylon\'s tea heritage',
-      message: "Hi TCTE! I'd love to book a Plantation Tour. Could you share available dates, tour duration, pricing, and what the experience covers?"
-    },
-    {
-      icon: '🌿',
-      title: 'Build Your Own Tea (BYOT)',
-      desc: 'Create your personalised blend',
-      message: "Hi TCTE! I'm interested in the Build Your Own Tea (BYOT) experience. Please share how it works, available slots, and pricing."
-    },
-    {
-      icon: '📚',
-      title: 'The Tea Library',
-      desc: 'Explore & purchase our tea collection',
-      message: "Hi TCTE! I'd like to explore The Tea Library. Could you share what teas are currently available, pricing, and how I can visit or browse the collection?"
-    },
-    {
-      icon: '📦',
-      title: 'E-Commerce & Delivery',
-      desc: 'Order Ceylon tea — local or worldwide',
-      message: "Hi TCTE! I'd like to order Ceylon tea for delivery. Could you share your available products, delivery options, and shipping costs to my location?"
-    },
-    {
-      icon: '👥',
-      title: 'Workshops & Groups',
-      desc: 'Corporate, schools & private groups',
-      message: "Hi TCTE! I'd like to inquire about a group or workshop booking. Please share available packages, group size options, pricing, and available dates."
-    },
-  ];
+  const dialogRef = useRef(null)
+  const previousFocusRef = useRef(null)
+
+  useEffect(() => {
+    if (!isOpen) return undefined
+
+    previousFocusRef.current = document.activeElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const dialog = dialogRef.current
+    const focusable = dialog?.querySelectorAll(
+      'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )
+    focusable?.[0]?.focus()
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab' || !focusable?.length) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
+      previousFocusRef.current?.focus()
+    }
+  }, [isOpen, onClose])
 
   const handleOptionClick = (message) => {
     onClose();
@@ -69,12 +61,17 @@ export function WhatsAppInquiryModal({ isOpen, onClose }) {
         className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-end sm:items-center justify-center p-4 animate-fadeIn"
         onClick={onClose}
       >
-        <div 
+        <div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="whatsapp-dialog-title"
+          aria-describedby="whatsapp-dialog-description"
           className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] overflow-hidden flex flex-col animate-slideUp"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-[#25D366] text-white p-6 flex items-start justify-between">
+          <div className="bg-[#25D366] text-[#0B361D] p-6 flex items-start justify-between">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -82,13 +79,15 @@ export function WhatsAppInquiryModal({ isOpen, onClose }) {
                 </svg>
               </div>
               <div>
-                <h3 className="font-serif text-xl font-bold">Hi! Welcome to TCTE 🍃</h3>
-                <p className="text-white/90 text-xs mt-1">Which experience can we help you with?</p>
+                <h3 id="whatsapp-dialog-title" className="font-serif text-xl font-bold">Hi! Welcome to TCTE 🍃</h3>
+                <p id="whatsapp-dialog-description" className="text-[#0B361D]/80 text-xs mt-1">Which experience can we help you with?</p>
               </div>
             </div>
             <button 
+              type="button"
               onClick={onClose}
-              className="text-white/80 hover:text-white text-2xl leading-none"
+              className="text-[#0B361D]/80 hover:text-[#0B361D] text-2xl leading-none"
+              aria-label="Close WhatsApp inquiry dialog"
             >
               ×
             </button>
@@ -98,6 +97,7 @@ export function WhatsAppInquiryModal({ isOpen, onClose }) {
           <div className="overflow-y-auto p-3 flex-1">
             {inquiryOptions.map((option, i) => (
               <button
+                type="button"
                 key={i}
                 onClick={() => handleOptionClick(option.message)}
                 className="w-full flex items-center gap-4 p-4 hover:bg-[#F9F6F0] rounded-xl transition-all text-left group border border-transparent hover:border-[#25D366]/30 mb-1"

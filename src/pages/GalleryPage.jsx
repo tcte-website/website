@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
+import DeferredVideo from '../components/DeferredVideo';
 
 const categories = ["All Collections", "Tea Making Experience", "Tea Library", "Café", "Events/Groups"];
 
@@ -114,12 +115,14 @@ export default function GalleryPage({ navigate }) {
       <Nav navigate={navigate} currentPage="gallery" />
 
       {/* Modern Hero with Fading Gradient */}
-      <section className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-16 px-8 text-center overflow-hidden">
+      <section id="main-content" className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-16 px-8 text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           {/* Hero Image updated with one of your new links */}
           <img 
             src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/2.jpeg" 
             alt="Gallery Hero Background" 
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover scale-105"
             style={{ objectPosition: 'center 39%' }}
           />
@@ -148,10 +151,10 @@ export default function GalleryPage({ navigate }) {
         <div className="px-8 flex justify-between items-end max-w-[1400px] mx-auto mb-6">
           <h2 className="text-3xl font-serif font-bold text-[#1b3b22]">Featured Moments</h2>
           <div className="flex gap-3">
-            <button onClick={() => scroll('left')} className="w-12 h-12 rounded-full border-2 border-[#c8a951] text-[#c8a951] flex items-center justify-center hover:bg-[#c8a951] hover:text-white transition-all duration-300">
+            <button type="button" aria-label="Show previous featured moments" onClick={() => scroll('left')} className="w-12 h-12 rounded-full border-2 border-[#806707] text-[#806707] flex items-center justify-center hover:bg-[#806707] hover:text-white transition-all duration-300">
               ←
             </button>
-            <button onClick={() => scroll('right')} className="w-12 h-12 rounded-full border-2 border-[#c8a951] text-[#c8a951] flex items-center justify-center hover:bg-[#c8a951] hover:text-white transition-all duration-300">
+            <button type="button" aria-label="Show next featured moments" onClick={() => scroll('right')} className="w-12 h-12 rounded-full border-2 border-[#806707] text-[#806707] flex items-center justify-center hover:bg-[#806707] hover:text-white transition-all duration-300">
               →
             </button>
           </div>
@@ -171,6 +174,8 @@ export default function GalleryPage({ navigate }) {
               <img 
                 src={photo.src} 
                 alt={photo.title} 
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b3b22]/90 via-[#1b3b22]/20 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90"></div>
@@ -189,16 +194,13 @@ export default function GalleryPage({ navigate }) {
       <section className="py-16 px-4 md:px-8 max-w-[1400px] mx-auto">
         <div className="relative w-full h-[400px] md:h-[600px] rounded-2xl overflow-hidden shadow-2xl group cursor-pointer border border-[#e8e4d9]">
           {/* Video Placeholder Image updated */}
-          <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-full object-cover transition-transform duration-700 "
-            >
-              <source src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/ceylon-tea-experience-videos.MP4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          <DeferredVideo
+            src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/ceylon-tea-experience-videos.MP4"
+            poster="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/25.jpeg"
+            loadWhenVisible
+            className="w-full h-full object-cover transition-transform duration-700"
+            ariaLabel="A glimpse of The Ceylon Tea Experience"
+          />
           <div className="absolute inset-0 bg-[#1A3D1A]/40 group-hover:bg-[#1A3D1A]/30 transition-colors duration-500"></div>
           
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
@@ -245,6 +247,8 @@ export default function GalleryPage({ navigate }) {
               <img
                 src={photo.src}
                 alt={photo.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-[1.2s] ease-in-out group-hover:scale-110"
               />
               
@@ -276,6 +280,7 @@ export default function GalleryPage({ navigate }) {
             <button
               onClick={() => setLightbox(null)}
               className="absolute -top-12 right-0 md:-right-12 text-white/50 text-4xl hover:text-[#c8a951] transition-colors"
+              aria-label="Close image viewer"
             >
               ×
             </button>
@@ -297,6 +302,8 @@ export default function GalleryPage({ navigate }) {
             {/* Prev/Next Navigation for Lightbox */}
             <div className="absolute top-[40%] -translate-y-1/2 left-0 right-0 flex justify-between px-2 md:-mx-16 pointer-events-none">
               <button
+                type="button"
+                aria-label="Show previous image"
                 className="pointer-events-auto bg-white/5 hover:bg-[#c8a951] border border-white/10 text-white w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
                 onClick={e => {
                   e.stopPropagation();
@@ -308,6 +315,8 @@ export default function GalleryPage({ navigate }) {
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               </button>
               <button
+                type="button"
+                aria-label="Show next image"
                 className="pointer-events-auto bg-white/5 hover:bg-[#c8a951] border border-white/10 text-white w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
                 onClick={e => {
                   e.stopPropagation();
@@ -328,7 +337,10 @@ export default function GalleryPage({ navigate }) {
          <div className="absolute inset-0 opacity-30">
           <img 
             src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/my_images/my+12.jpg" 
-            alt="Texture" 
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
           />
         </div>
@@ -353,9 +365,7 @@ export default function GalleryPage({ navigate }) {
           </div>
         </div>
       </section>
-      <div className="fixed bottom-8 right-8 z-50">
-        <WhatsAppFloatingButton />
-      </div>
+      <WhatsAppFloatingButton />
 
       <Footer navigate={navigate} />
     </div>

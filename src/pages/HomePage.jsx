@@ -3,6 +3,7 @@ import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
 import { WhatsAppInquiryModal } from '../components/WhatsAppModal';
+import DeferredVideo from '../components/DeferredVideo';
 
 const testimonials = [
   {
@@ -31,35 +32,6 @@ const testimonials = [
   }
 ];
 
-// Rotating image cards — 5 Sri Lankan tea regions
-const heroCards = [
-  {
-    img: "https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/my_images/my+06.jpeg",
-    label: "Hand Made Tea",
-    sub: "Craft the champagne of teas..."
-  },
-  {
-    img: "https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/my_images/my+05.jpeg",
-    label: "The Tea Library",
-    sub: "Explore full-bodied, golden blends..."
-  },
-  {
-    img: "https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/my_images/my+04.jpeg",
-    label: "Build Your Own Tea",
-    sub: "Robust teas, shipped worldwide..."
-  },
-  {
-    img: "https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/1.jpeg",
-    label: "Global Delivery",
-    sub: "Taste rich, dark teas together..."
-  },
-  {
-    img: "https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/my_images/my+01.jpeg",
-    label: "Workshops & Groups",
-    sub: "Taste rich southern teas together..."
-  },
-]
-
 // Our Experience section images
 const experienceImages = [
   {
@@ -82,34 +54,11 @@ const experienceImages = [
 ];
 
 export default function HomePage({ navigate }) {
-  const [activeCardIndex, setActiveCardIndex] = useState(0)
   const [waModalOpen, setWaModalOpen] = useState(false)
-
-  // Watermark text cycles through destination labels
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveCardIndex(prev => (prev + 1) % heroCards.length)
-    }, 3500)
-    return () => clearInterval(interval)
-  }, [])
 
   return (
     <div className="min-h-screen font-sans text-gray-800 bg-[#F9F6F0]">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Lato', sans-serif; }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes watermarkSwap {
-          0% { opacity: 0; transform: translateX(40px); }
-          15% { opacity: 1; transform: translateX(0); }
-          85% { opacity: 1; transform: translateX(0); }
-          100% { opacity: 0; transform: translateX(-40px); }
-        }
         .hero-bg-video {
           position: absolute;
           inset: 0;
@@ -118,28 +67,125 @@ export default function HomePage({ navigate }) {
           object-fit: cover;
           z-index: 0;
         }
+        .homepage-hero {
+          position: relative;
+          min-height: calc(100svh - 5rem);
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          padding: clamp(2rem, 5.5vh, 4.5rem) clamp(3rem, 6vw, 7rem);
+        }
+        .homepage-hero__media {
+          position: absolute;
+          inset: 0;
+        }
+        .homepage-hero__overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 10;
+          background: linear-gradient(
+            90deg,
+            rgba(6, 49, 23, 0.94) 0%,
+            rgba(6, 49, 23, 0.78) 35%,
+            rgba(6, 49, 23, 0.34) 68%,
+            rgba(6, 49, 23, 0.12) 100%
+          );
+        }
+        .homepage-hero__content {
+          position: relative;
+          z-index: 20;
+          width: min(100%, 48rem);
+          color: white;
+        }
+        .homepage-hero__eyebrow {
+          margin-bottom: 1.25rem;
+          color: #B8960C;
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+        }
+        .homepage-hero__title {
+          margin: 0 0 clamp(1.5rem, 3.5vh, 2rem);
+          font-size: clamp(3.25rem, 5.2vw, 5.5rem);
+          font-weight: 800;
+          line-height: 0.99;
+          letter-spacing: -0.025em;
+          text-shadow: 0 0.2rem 0.75rem rgba(0, 0, 0, 0.3);
+        }
+        .homepage-hero__title-line {
+          display: block;
+        }
+        .homepage-hero__title-highlight {
+          color: #B8960C;
+        }
+        .homepage-hero__description {
+          max-width: 35rem;
+          margin: 0 0 clamp(1.5rem, 3.5vh, 2rem);
+          color: #E5E7EB;
+          font-size: clamp(1rem, 1.2vw, 1.125rem);
+          line-height: 1.65;
+        }
+        .homepage-hero__cta {
+          border: 2px solid #B8960C;
+          border-radius: 0.125rem;
+          padding: 1rem 2rem;
+          color: #B8960C;
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition:
+            color 200ms ease,
+            background-color 200ms ease;
+        }
+        .homepage-hero__cta:hover {
+          background-color: #B8960C;
+          color: white;
+        }
+        @media (max-width: 767px) {
+          .homepage-hero {
+            min-height: calc(100svh - 5rem);
+            padding: 1.25rem 1.25rem 3.5rem;
+          }
+          .homepage-hero__eyebrow {
+            margin-bottom: 1rem;
+            font-size: 0.6875rem;
+          }
+          .homepage-hero__title {
+            margin-bottom: 1.25rem;
+            font-size: clamp(2.5rem, 11.25vw, 3.5rem);
+            line-height: 1;
+          }
+          .homepage-hero__description {
+            margin-bottom: 1.375rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+          }
+          .homepage-hero__cta {
+            padding: 0.875rem 1.5rem;
+          }
+          .homepage-hero__overlay {
+            background: linear-gradient(
+              90deg,
+              rgba(6, 49, 23, 0.94) 0%,
+              rgba(6, 49, 23, 0.75) 70%,
+              rgba(6, 49, 23, 0.48) 100%
+            );
+          }
+        }
+        @media (max-width: 360px) {
+          .homepage-hero__description {
+            font-size: 0.8125rem;
+            line-height: 1.45;
+          }
+        }
         .cta-bg {
           background-image: url('https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/my_images/my+02.avif');
           background-size: cover;
           background-position: center;
           background-attachment: fixed;
-        }
-        .hero-watermark {
-          position: absolute;
-          top: 14%;
-          right: -2%;
-          font-family: 'Playfair Display', serif;
-          font-weight: 900;
-          font-size: clamp(120px, 18vw, 260px);
-          line-height: 0.9;
-          letter-spacing: 0.02em;
-          color: rgba(255, 255, 255, 0.07);
-          white-space: nowrap;
-          pointer-events: none;
-          z-index: 11;
-          user-select: none;
-          text-transform: uppercase;
-          animation: watermarkSwap 3.5s ease-in-out infinite;
         }
       `}</style>
 
@@ -147,46 +193,39 @@ export default function HomePage({ navigate }) {
 
 
       {/* Hero */}
-      <section className="relative min-h-[92vh] flex items-center px-8 py-20 overflow-hidden">                                                                          
-        {/* Background video */}                                                                                                                                        
-        <video                                                                                                                                                          
-          autoPlay
-          loop
-          muted                                                                                                                                                         
-          playsInline
-          className="hero-bg-video"
-        >
-          <source src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/GalleHome.mp4" type="video/mp4" />
-          Your browser does not support the video tag.                                                                                                                     
-        </video>
+      <section id="main-content" className="homepage-hero">
+        {/* Background video */}
+        <div className="homepage-hero__media" aria-hidden="true">
+          <DeferredVideo
+            src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/GalleHome.mp4"
+            poster="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/17.webp"
+            className="hero-bg-video"
+            ariaLabel="Ceylon Tea experience in Galle"
+          />
+        </div>
 
-        {/* Overlay using new brand dark green */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1A3D1A]/95 to-[#1A3D1A]/40 z-10"></div>
-        
+        <div className="homepage-hero__overlay" aria-hidden="true"></div>
 
-        <div className="relative z-20 w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="md:w-1/2 text-white">
-            <p className="text-xs font-sans uppercase tracking-[0.3em] text-[#B8960C] mb-4">(TCTE) · Heart of Galle</p>
-            
-            {/* Updated Hero Headline */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold leading-tight mb-8 drop-shadow-md">
-              "Don't Just Drink Ceylon Tea <br/><span className="text-[#B8960C]">Experience It</span>"
-            </h1>
-            
-            <p className="text-sm md:text-base font-sans leading-relaxed mb-8 max-w-md text-gray-200">
-              The Ceylon Tea Experience is an immersive, handson tea discovery attraction designed for international visitors who want to experience Ceylon Tea beyond plantations and factories. Guests don't just drink tea they pluck, make, blend, taste, and understand it.
-            </p>
-            
-            {/* Added Prominent CTA Button & Trust Indicators */}
-            <div className="flex gap-4 flex-wrap mb-5">
-              <button
-                onClick={() => setWaModalOpen(true)}
-                className="border-2 border-[#B8960C] text-[#B8960C] px-8 py-4 text-xs font-sans font-bold uppercase tracking-wider hover:bg-[#B8960C] hover:text-white transition rounded-sm"
-              >
-                Book Your Experience
-              </button>
-            </div>
-          </div>          
+        <div className="homepage-hero__content">
+          <p className="homepage-hero__eyebrow font-sans">(TCTE) · Heart of Galle</p>
+
+          <h1 className="homepage-hero__title font-serif">
+            <span className="homepage-hero__title-line">"Don't Just Drink</span>
+            <span className="homepage-hero__title-line">Ceylon Tea</span>
+            <span className="homepage-hero__title-line homepage-hero__title-highlight">Experience It"</span>
+          </h1>
+
+          <p className="homepage-hero__description font-sans">
+            The Ceylon Tea Experience is an immersive, hands-on tea discovery attraction designed for international visitors who want to experience Ceylon Tea beyond plantations and factories. Guests don't just drink tea — they pluck, make, blend, taste, and understand it.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => setWaModalOpen(true)}
+            className="homepage-hero__cta font-sans"
+          >
+            Book Your Experience
+          </button>
         </div>
       </section>
 
@@ -326,7 +365,7 @@ export default function HomePage({ navigate }) {
                 }
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-5 bg-white rounded-xl border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#F9F6F0] flex items-center justify-center text-[#B8960C]">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#F9F6F0] flex items-center justify-center text-[#806707]">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       {item.icon}
                     </svg>
@@ -345,16 +384,13 @@ export default function HomePage({ navigate }) {
           <div className="lg:w-[45%] order-1 lg:order-2 lg:sticky lg:top-54 mt-10 lg:mt-16">
             {/* Aspect ratio changed to 4/5 to make it wider/longer, gap reduced in parent flex container */}
             <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-2xl border-2 border-white group">
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
+              <DeferredVideo
+                src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/ceylon-tea-experience-videos.MP4"
+                poster="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/25.jpeg"
+                loadWhenVisible
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              >
-                <source src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/ceylon-tea-experience-videos.MP4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+                ariaLabel="Hands-on Ceylon Tea making experience"
+              />
             </div>
           </div>
 
@@ -385,10 +421,10 @@ export default function HomePage({ navigate }) {
 
             {/* RIGHT — Text Content */}
             <div className="order-1 lg:order-2 lg:pl-8">
-              <p className="text-xs font-sans uppercase tracking-[0.3em] text-[#B8960C] mb-4 font-bold">The Journey</p>
+              <p className="text-xs font-sans uppercase tracking-[0.3em] text-[#806707] mb-4 font-bold">The Journey</p>
 
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#2D6A2D] font-bold leading-tight mb-6">
-                Our <em className="text-[#B8960C] not-italic">Experience</em>
+                Our <em className="text-[#806707] not-italic">Experience</em>
               </h2>
 
               {/* Gold accent line */}
@@ -417,7 +453,7 @@ export default function HomePage({ navigate }) {
       {/* Social Proof / Reviews Section */}
       <section className="py-24 px-8 bg-[#F9F6F0]">
         <div className="max-w-6xl mx-auto text-center mb-16">
-          <p className="text-xs font-sans uppercase tracking-[0.3em] text-[#B8960C] mb-3 font-bold">Guest Experiences</p>
+          <p className="text-xs font-sans uppercase tracking-[0.3em] text-[#806707] mb-3 font-bold">Guest Experiences</p>
           <h2 className="text-4xl md:text-5xl font-serif text-[#2D6A2D] font-bold mb-6">Loved by Visitors Worldwide</h2>
           
           {/* Aggregate Rating Badge */}
@@ -445,7 +481,7 @@ export default function HomePage({ navigate }) {
               {/* Review Header */}
               <div className="flex justify-between items-start mb-6">
                 <div className="flex items-center gap-4">
-                  <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#F9F6F0]" />
+                  <img src={t.avatar} alt={t.name} width="48" height="48" loading="lazy" decoding="async" className="w-12 h-12 rounded-full object-cover border-2 border-[#F9F6F0]" />
                   <div>
                     <div className="text-[#1A3D1A] text-sm font-sans font-bold">{t.name}</div>
                     <div className="text-gray-500 text-xs font-sans mt-0.5">{t.date}</div>
@@ -473,7 +509,7 @@ export default function HomePage({ navigate }) {
               
               {/* Optional role display */}
               <div className="mt-4 pt-4 border-t border-gray-100">
-                <span className="text-[#B8960C] text-xs font-bold uppercase tracking-wider">{t.role}</span>
+                <span className="text-[#806707] text-xs font-bold uppercase tracking-wider">{t.role}</span>
               </div>
             </div>
           ))}
@@ -513,7 +549,7 @@ export default function HomePage({ navigate }) {
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             <button
               onClick={() => setWaModalOpen(true)}
-              className="bg-[#B8960C] text-white px-10 py-4 text-sm font-sans font-bold uppercase tracking-wider hover:bg-[#9a7d0a] transition rounded-sm shadow-lg"
+              className="bg-[#D3AE24] text-[#1A3D1A] px-10 py-4 text-sm font-sans font-bold uppercase tracking-wider hover:bg-[#E0BE39] transition rounded-sm shadow-lg"
             >
               Book Your Experience
             </button>
@@ -527,9 +563,7 @@ export default function HomePage({ navigate }) {
           </div>
         </div>
       </section>
-      <div className="fixed bottom-8 right-8 z-50">
-        <WhatsAppFloatingButton />
-      </div>
+      <WhatsAppFloatingButton />
 
       <Footer navigate={navigate} />
 
@@ -566,6 +600,8 @@ function ExperienceImageCarousel({ images }) {
           >
             <img
               src={item.src}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
               className="w-full h-full object-cover"
               alt={item.caption || `Experience Slide ${i + 1}`}
             />
@@ -585,15 +621,22 @@ function ExperienceImageCarousel({ images }) {
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {images.map((_, i) => (
             <button
+              type="button"
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`transition-all duration-300 rounded-full ${
-                i === activeIndex
-                  ? "w-8 h-2 bg-[#B8960C]"
-                  : "w-2 h-2 bg-white/70 hover:bg-white"
-              }`}
+              className="flex h-6 w-6 items-center justify-center rounded-full transition-all duration-300"
               aria-label={`Slide ${i + 1}`}
-            />
+              aria-current={i === activeIndex ? "true" : undefined}
+            >
+              <span
+                aria-hidden="true"
+                className={`block rounded-full transition-all duration-300 ${
+                  i === activeIndex
+                    ? "h-2 w-6 bg-[#D3AE24]"
+                    : "h-2 w-2 bg-white/70 hover:bg-white"
+                }`}
+              />
+            </button>
           ))}
         </div>
 
@@ -603,127 +646,4 @@ function ExperienceImageCarousel({ images }) {
       </div>
     </div>
   );
-}
-
-
-
-// -------------------------------------------------------------
-// Rotating Cards — Coverflow 3D Carousel
-// -------------------------------------------------------------
-function RotatingCards({ cards }) {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
-
-  const CARD_W = 180
-  const CARD_H = 280
-
-  useEffect(() => {
-    if (isHovered) return;
-    const interval = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % cards.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [cards.length, isHovered]);
-
-  return (
-    <div 
-      style={{
-        width: '100%',
-        height: `${CARD_H + 80}px`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        perspective: '1000px',
-        position: 'relative',
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {cards.map((card, i) => {
-        let offset = (i - activeIndex + cards.length) % cards.length;
-        if (offset > Math.floor(cards.length / 2)) {
-          offset -= cards.length;
-        }
-
-        const absOffset = Math.abs(offset);
-        const isActive = offset === 0;
-
-        const translateX = offset * 110; 
-        const translateZ = absOffset * -150;
-        const rotateY = isActive ? 0 : offset < 0 ? 45 : -45;
-        const scale = isActive ? 1.1 : 0.85;
-        const zIndex = 10 - absOffset;
-        const opacity = isActive ? 1 : 1 - (absOffset * 0.3);
-
-        return (
-          <div
-            key={i}
-            onClick={() => setActiveIndex(i)}
-            style={{
-              position: 'absolute',
-              width: `${CARD_W}px`,
-              height: `${CARD_H}px`,
-              borderRadius: '20px',
-              overflow: 'hidden',
-              border: isActive ? '2px solid #B8960C' : '1px solid rgba(255,255,255,0.18)',
-              boxShadow: isActive ? '0 25px 50px rgba(0,0,0,0.8)' : '0 10px 30px rgba(0,0,0,0.4)',
-              transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
-              zIndex: zIndex,
-              opacity: opacity,
-              cursor: 'pointer',
-              transition: 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)',
-            }}
-          >
-            <img
-              src={card.img}
-              alt={card.label}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block'
-              }}
-            />
-
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(26,61,26,0.95) 0%, rgba(26,61,26,0.3) 50%, transparent 100%)',
-            }} />
-
-            <div style={{
-              position: 'absolute', bottom: '18px', left: '18px', right: '18px',
-            }}>
-              <div style={{
-                color: '#F9F6F0',
-                fontSize: '18px',
-                fontWeight: '800',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                lineHeight: 1.2,
-                marginBottom: '8px',
-                fontFamily: "'Playfair Display', serif",
-                textShadow: '0 2px 8px rgba(0,0,0,0.8)',
-              }}>
-                {card.label}
-              </div>
-              <div style={{
-                color: '#B8960C',
-                fontSize: '11px',
-                fontFamily: "'Lato', sans-serif",
-                letterSpacing: '0.02em',
-                lineHeight: 1.4,
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                fontWeight: 'bold'
-              }}>
-                {card.sub}
-              </div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
-  )
 }

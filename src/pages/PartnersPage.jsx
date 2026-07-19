@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { openWhatsApp } from '../components/WhatsAppModal';
+import { openWhatsApp } from '../utils/whatsapp';
 
 const experienceHighlights = [
   'A cultural, educational, and interactive tea experience in Galle, Sri Lanka',
@@ -93,7 +93,6 @@ const downloads = [
       'Complete overview of The Ceylon Tea Experience, available activities, durations, ideal guests, selling points, and location information.',
     href: `${import.meta.env.BASE_URL}downloads/partners/tcte-fact-sheet.pdf`,
     button: 'Download Full Fact Sheet',
-    ariaLabel: 'Download the full TCTE fact sheet PDF',
   },
   {
     label: 'Guest Resource',
@@ -102,7 +101,6 @@ const downloads = [
       'Clothing recommendations, visitor guidance, safety information, etiquette, and natural-environment notes.',
     href: `${import.meta.env.BASE_URL}downloads/partners/tcte-guest-notes.pdf`,
     button: 'Download Guest Notes',
-    ariaLabel: 'Download the TCTE guest notes PDF',
   },
   {
     label: 'Commercial Resource',
@@ -111,7 +109,6 @@ const downloads = [
       'Experience pricing, booking slots, agent commissions, partner terms, and settlement information.',
     href: `${import.meta.env.BASE_URL}downloads/partners/tcte-pricing-commission-structure.pdf`,
     button: 'Download Pricing & Commission Guide',
-    ariaLabel: 'Download the TCTE pricing and commission guide PDF',
   },
 ];
 
@@ -120,57 +117,59 @@ const bookingMessage =
 
 export default function PartnersPage() {
   useEffect(() => {
-    const previousTitle = document.title;
-    const descriptionMeta = document.querySelector('meta[name="description"]');
-    const previousDescription = descriptionMeta?.getAttribute('content') ?? '';
-    let robotsMeta = document.querySelector('meta[name="robots"]');
-    const robotsMetaWasCreated = !robotsMeta;
-    const previousRobots = robotsMeta?.getAttribute('content') ?? '';
+    const previousTitle = document.title
+    const partnerDescription =
+      'Unlisted partner resource for The Ceylon Tea Experience, including experience details, guest guidance, pricing, commissions, and booking information.'
+    const partnerUrl = 'https://www.theceylonteaexperience.com/partners'
+    const managedTags = [
+      ['meta[name="description"]', 'content', partnerDescription],
+      ['meta[name="robots"]', 'content', 'noindex, nofollow, noarchive, nosnippet'],
+      ['link[rel="canonical"]', 'href', partnerUrl],
+      ['meta[property="og:title"]', 'content', 'TCTE Partner Information'],
+      ['meta[property="og:description"]', 'content', partnerDescription],
+      ['meta[property="og:url"]', 'content', partnerUrl],
+      ['meta[name="twitter:title"]', 'content', 'TCTE Partner Information'],
+      ['meta[name="twitter:description"]', 'content', partnerDescription],
+    ]
+    const previousValues = managedTags.map(([selector, attribute]) => {
+      const element = document.head.querySelector(selector)
+      return [element, attribute, element?.getAttribute(attribute) ?? '']
+    })
 
-    document.title = 'TCTE Partner Information';
+    document.title = 'TCTE Partner Information'
 
-    if (descriptionMeta) {
-      descriptionMeta.setAttribute(
-        'content',
-        'Unlisted partner resource for The Ceylon Tea Experience, including experience details, guest guidance, pricing, commissions, and booking information.',
-      );
-    }
-
-    if (!robotsMeta) {
-      robotsMeta = document.createElement('meta');
-      robotsMeta.setAttribute('name', 'robots');
-      document.head.appendChild(robotsMeta);
-    }
-
-    robotsMeta.setAttribute('content', 'noindex, nofollow, noarchive, nosnippet');
+    managedTags.forEach(([selector, attribute, value]) => {
+      document.head.querySelector(selector)?.setAttribute(attribute, value)
+    })
 
     return () => {
-      document.title = previousTitle;
-
-      if (descriptionMeta) {
-        descriptionMeta.setAttribute('content', previousDescription);
-      }
-
-      if (robotsMetaWasCreated) {
-        robotsMeta.remove();
-      } else {
-        robotsMeta.setAttribute('content', previousRobots);
-      }
-    };
-  }, []);
+      document.title = previousTitle
+      previousValues.forEach(([element, attribute, value]) => {
+        element?.setAttribute(attribute, value)
+      })
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-[#F9F6F0] font-sans text-gray-800">
+      <a
+        href="#partner-main-content"
+        className="fixed left-4 top-3 z-[100] -translate-y-24 bg-[#1A3D1A] px-4 py-3 text-sm font-bold text-white transition-transform focus:translate-y-0"
+      >
+        Skip to partner information
+      </a>
       <header className="sticky top-0 z-50 border-b border-[#1A3D1A]/10 bg-[#F9F6F0]/95 backdrop-blur-md">
         <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-5 px-5 py-3 md:px-8">
           <div className="flex min-w-0 items-center gap-4">
             <img
               src={`${import.meta.env.BASE_URL}logo.webp`}
               alt="The Ceylon Tea Experience"
+              width="256"
+              height="256"
               className="h-14 w-14 shrink-0 object-contain md:h-16 md:w-16"
             />
             <div className="min-w-0 border-l border-[#1A3D1A]/20 pl-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#B8960C]">
+              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#806707]">
                 TCTE
               </p>
               <p className="truncate font-serif text-base font-bold text-[#1A3D1A] md:text-lg">
@@ -189,7 +188,7 @@ export default function PartnersPage() {
         </div>
       </header>
 
-      <main>
+      <main id="partner-main-content">
         <section className="relative isolate overflow-hidden bg-[#1A3D1A] px-5 py-24 text-white md:px-8 md:py-32">
           <div
             className="absolute inset-0 -z-10 opacity-25"
@@ -217,7 +216,7 @@ export default function PartnersPage() {
         <section className="px-5 py-20 md:px-8 md:py-24" aria-labelledby="partner-overview-heading">
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 max-w-3xl">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#B8960C]">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#806707]">
                 Experience Summary
               </p>
               <h2
@@ -240,7 +239,7 @@ export default function PartnersPage() {
                 <ul className="space-y-4 text-sm leading-relaxed text-gray-700 md:text-base">
                   {experienceHighlights.map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <span className="mt-0.5 font-bold text-[#B8960C]" aria-hidden="true">
+                      <span className="mt-0.5 font-bold text-[#806707]" aria-hidden="true">
                         ✓
                       </span>
                       <span>{item}</span>
@@ -293,7 +292,7 @@ export default function PartnersPage() {
         >
           <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
             <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#B8960C]">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#806707]">
                 Before Arrival
               </p>
               <h2
@@ -331,7 +330,7 @@ export default function PartnersPage() {
           <div className="mx-auto max-w-7xl">
             <div className="mb-10 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
               <div className="max-w-3xl">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#B8960C]">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#806707]">
                   Valid for 2026 Summer
                 </p>
                 <h2
@@ -383,7 +382,7 @@ export default function PartnersPage() {
                       </th>
                       <td className="px-5 py-5 text-sm text-gray-600">{row.duration}</td>
                       <td className="px-5 py-5 text-sm font-bold text-[#1A3D1A]">{row.mrp}</td>
-                      <td className="px-5 py-5 text-sm font-bold text-[#B8960C]">
+                      <td className="px-5 py-5 text-sm font-bold text-[#806707]">
                         {row.commission}
                       </td>
                       <td className="px-5 py-5 text-sm text-gray-600">{row.notes}</td>
@@ -393,7 +392,7 @@ export default function PartnersPage() {
               </table>
             </div>
 
-            <p className="mt-4 text-sm leading-relaxed text-gray-500">
+            <p className="mt-4 text-sm leading-relaxed text-gray-600">
               The same public MRP applies to walk-in guests and hotel-referred guests. Walk-ins
               remain subject to availability, and advance booking is recommended.
             </p>
@@ -426,7 +425,7 @@ export default function PartnersPage() {
                   {partnerCommissions.map((item) => (
                     <div key={item.type} className="flex justify-between gap-5 py-3 first:pt-0">
                       <dt className="text-sm text-gray-600">{item.type}</dt>
-                      <dd className="text-right text-sm font-bold text-[#B8960C]">
+                      <dd className="text-right text-sm font-bold text-[#806707]">
                         {item.commission}
                       </dd>
                     </div>
@@ -444,19 +443,19 @@ export default function PartnersPage() {
                 </h3>
                 <ul className="space-y-4 text-sm leading-relaxed text-gray-600">
                   <li className="flex gap-3">
-                    <span className="font-bold text-[#B8960C]" aria-hidden="true">✓</span>
+                    <span className="font-bold text-[#806707]" aria-hidden="true">✓</span>
                     Bookings are accepted from agents, operators, and guides by phone or WhatsApp.
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-bold text-[#B8960C]" aria-hidden="true">✓</span>
+                    <span className="font-bold text-[#806707]" aria-hidden="true">✓</span>
                     Walk-in bookings are accepted subject to availability.
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-bold text-[#B8960C]" aria-hidden="true">✓</span>
+                    <span className="font-bold text-[#806707]" aria-hidden="true">✓</span>
                     Commission settlements are made daily.
                   </li>
                   <li className="flex gap-3">
-                    <span className="font-bold text-[#B8960C]" aria-hidden="true">✓</span>
+                    <span className="font-bold text-[#806707]" aria-hidden="true">✓</span>
                     Pre-registration is required.
                   </li>
                 </ul>
@@ -492,7 +491,7 @@ export default function PartnersPage() {
                   key={download.title}
                   className="flex flex-col border border-white/15 bg-white p-7 text-gray-800 shadow-xl"
                 >
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B8960C]">
+                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#806707]">
                     {download.label}
                   </p>
                   <h3 className="mb-3 font-serif text-2xl font-bold text-[#1A3D1A]">
@@ -501,15 +500,25 @@ export default function PartnersPage() {
                   <p className="mb-7 flex-1 text-sm leading-relaxed text-gray-600">
                     {download.description}
                   </p>
-                  <a
-                    href={download.href}
-                    download
-                    className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#2D6A2D] px-5 py-3 text-center text-xs font-bold uppercase tracking-widest text-white transition hover:bg-[#1A3D1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8960C]"
-                    aria-label={download.ariaLabel}
-                  >
-                    {download.button}
-                    <span aria-hidden="true">↓</span>
-                  </a>
+                  {download.requestOnly ? (
+                    <button
+                      type="button"
+                      onClick={() => openWhatsApp(bookingMessage)}
+                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-sm bg-[#2D6A2D] px-5 py-3 text-center text-xs font-bold uppercase tracking-widest text-white transition hover:bg-[#1A3D1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8960C]"
+                    >
+                      {download.button}
+                      <span aria-hidden="true">→</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={download.href}
+                      download
+                      className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#2D6A2D] px-5 py-3 text-center text-xs font-bold uppercase tracking-widest text-white transition hover:bg-[#1A3D1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8960C]"
+                    >
+                      {download.button}
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  )}
                 </article>
               ))}
             </div>
@@ -519,7 +528,7 @@ export default function PartnersPage() {
         <section className="px-5 py-20 md:px-8 md:py-24" aria-labelledby="partner-contact-heading">
           <div className="mx-auto grid max-w-6xl grid-cols-1 overflow-hidden bg-white shadow-xl lg:grid-cols-2">
             <div className="bg-[#2D6A2D] p-8 text-white md:p-12">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#D3AE24]">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-[#F5E3A1]">
                 Reservations
               </p>
               <h2
@@ -535,7 +544,7 @@ export default function PartnersPage() {
               <button
                 type="button"
                 onClick={() => openWhatsApp(bookingMessage)}
-                className="cursor-pointer rounded-sm border-2 border-[#D3AE24] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#D3AE24] transition hover:bg-[#D3AE24] hover:text-[#1A3D1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="cursor-pointer rounded-sm border-2 border-[#F5E3A1] px-7 py-4 text-xs font-bold uppercase tracking-widest text-[#F5E3A1] transition hover:bg-[#F5E3A1] hover:text-[#1A3D1A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Message on WhatsApp
               </button>
@@ -553,14 +562,14 @@ export default function PartnersPage() {
               <div className="space-y-3 border-t border-[#1A3D1A]/10 pt-6">
                 <p>
                   <span className="font-bold text-[#1A3D1A]">Phone / WhatsApp: </span>
-                  <a className="transition hover:text-[#B8960C]" href="tel:+94702900500">
+                  <a className="transition hover:text-[#806707]" href="tel:+94702900500">
                     +94 (0) 702 900 500
                   </a>
                 </p>
                 <p className="break-words">
                   <span className="font-bold text-[#1A3D1A]">Email: </span>
                   <a
-                    className="transition hover:text-[#B8960C]"
+                    className="transition hover:text-[#806707]"
                     href="mailto:reservations@theceylonteaexperience.com"
                   >
                     reservations@theceylonteaexperience.com
@@ -569,7 +578,7 @@ export default function PartnersPage() {
                 <p className="break-words">
                   <span className="font-bold text-[#1A3D1A]">Website: </span>
                   <a
-                    className="transition hover:text-[#B8960C]"
+                    className="transition hover:text-[#806707]"
                     href="https://www.theceylonteaexperience.com"
                   >
                     www.theceylonteaexperience.com
@@ -582,7 +591,7 @@ export default function PartnersPage() {
       </main>
 
       <footer className="border-t border-white/10 bg-[#102B16] px-5 py-8 text-center text-xs text-white/60 md:px-8">
-        <p>© 2026 The Ceylon Tea Experience. Partner resource.</p>
+        <p>© 2026 EXPACE PVT LTD. All rights reserved. Partner resource</p>
       </footer>
     </div>
   );
