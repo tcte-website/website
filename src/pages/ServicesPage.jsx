@@ -3,6 +3,72 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
 import { WhatsAppInquiryModal } from '../components/WhatsAppModal';
+import ServiceImageSlideshow from '../components/ServiceImageSlideshow';
+
+const servicesImageBase = `${import.meta.env.BASE_URL}images/services`;
+
+const teaLibraryImages = [
+  {
+    src: `${servicesImageBase}/tea-library-01.webp`,
+    alt: 'Premium Ceylon Tea products displayed on wooden shelves in The Tea Library',
+    width: 720,
+    height: 1280,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-02.webp`,
+    alt: 'Colourful Ceylon Tea packages arranged across The Tea Library shelves',
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-03.webp`,
+    alt: 'Wide selection of Sri Lankan tea brands at The Ceylon Tea Experience',
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-04.webp`,
+    alt: 'Tea tins and gift collections displayed along wooden retail shelves',
+    width: 960,
+    height: 1280,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-05.webp`,
+    alt: 'Boutique Ceylon Tea retail display with colourful packages and tins',
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-06.webp`,
+    alt: 'Premium tea boxes, tins, and regional collections in The Tea Library',
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-06.webp`,
+    alt: 'Full wooden-shelf display of Ceylon Tea products and gift selections',
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-08.webp`,
+    alt: 'Sri Lankan tea packages presented in a boutique retail collection',
+    width: 1280,
+    height: 960,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-09.webp`,
+    alt: 'Warmly lit shelves featuring tea tins, boxes, and colourful packages',
+    width: 853,
+    height: 1280,
+  },
+  {
+    src: `${servicesImageBase}/tea-library-10.webp`,
+    alt: 'Tea books, regional teas, and gift packages displayed in The Tea Library',
+    width: 1280,
+    height: 853,
+  },
+];
 
 export default function ServicesPage({ navigate }) {
   const [waModalOpen, setWaModalOpen] = useState(false);
@@ -104,9 +170,13 @@ export default function ServicesPage({ navigate }) {
         <div className="relative flex flex-col lg:flex-row-reverse items-center group">
           <div className="w-full lg:w-7/12 relative z-0 overflow-hidden rounded-sm">
             <img 
-              src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/17.webp" 
-              alt="Plantation Tour" 
-              className="w-full h-[400px] md:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
+              src={`${servicesImageBase}/plantation-tour-guest.jpeg`}
+              alt="Guest exploring tea plants during the Plantation Tour in Galle"
+              width="720"
+              height="1280"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-[400px] md:h-[550px] object-cover object-center transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
           <div className="w-full lg:w-6/12 lg:-mr-24 mt-[-40px] lg:mt-0 relative z-10 px-4 lg:px-0">
@@ -154,9 +224,13 @@ export default function ServicesPage({ navigate }) {
         <div className="relative flex flex-col lg:flex-row items-center group">
           <div className="w-full lg:w-7/12 relative z-0 overflow-hidden rounded-sm">
             <img 
-              src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/11.jpeg" 
-              alt="Build Your Own Tea" 
-              className="w-full h-[700px] md:h-[850px] lg:h-[800px] object-cover transition-transform duration-1000 group-hover:scale-105"
+              src={`${servicesImageBase}/build-your-own-tea-blending.webp`}
+              alt="Guest blending tea leaves and botanicals during the Build Your Own Tea experience"
+              width="1212"
+              height="2048"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-[700px] md:h-[850px] lg:h-[800px] object-cover object-center transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
           <div className="w-full lg:w-6/12 lg:-ml-24 mt-[-40px] lg:mt-0 relative z-10 px-4 lg:px-0 py-8">
@@ -216,10 +290,9 @@ export default function ServicesPage({ navigate }) {
         {/* Service 4: The Tea Library */}
         <div className="relative flex flex-col lg:flex-row-reverse items-center group">
           <div className="w-full lg:w-7/12 relative z-0 overflow-hidden rounded-sm">
-            <img 
-              src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/25.jpeg" 
-              alt="The Tea Library Display" 
-              className="w-full h-[400px] md:h-[500px] lg:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
+            <ServiceImageSlideshow
+              images={teaLibraryImages}
+              className="w-full h-[400px] md:h-[500px] lg:h-[550px]"
             />
           </div>
           <div className="w-full lg:w-6/12 lg:-mr-24 mt-[-40px] lg:mt-0 relative z-10 px-4 lg:px-0 py-8">
@@ -253,9 +326,13 @@ export default function ServicesPage({ navigate }) {
         <div className="relative flex flex-col lg:flex-row items-center group">
           <div className="w-full lg:w-7/12 relative z-0 overflow-hidden rounded-sm">
             <img 
-              src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/10.jpeg" 
-              alt="E-Commerce & Delivery" 
-              className="w-full h-[400px] md:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
+              src={`${servicesImageBase}/ecommerce-tea-gift-delivery.webp`}
+              alt="Ceylon Tea gift packaging prepared for delivery and worldwide ordering"
+              width="1322"
+              height="1190"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-[400px] md:h-[550px] object-cover object-center transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
           <div className="w-full lg:w-6/12 lg:-ml-24 mt-[-40px] lg:mt-0 relative z-10 px-4 lg:px-0 py-8">
@@ -307,9 +384,13 @@ export default function ServicesPage({ navigate }) {
         <div className="relative flex flex-col lg:flex-row-reverse items-center group pb-10">
           <div className="w-full lg:w-7/12 relative z-0 overflow-hidden rounded-sm">
             <img 
-              src="https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/20.webp" 
-              alt="Workshops and Groups" 
-              className="w-full h-[400px] md:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
+              src={`${servicesImageBase}/workshops-group-tea-tasting.webp`}
+              alt="International guests taking part in a guided group tea-tasting workshop"
+              width="1448"
+              height="1086"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-[400px] md:h-[550px] object-cover object-[55%_center] md:object-center transition-transform duration-1000 group-hover:scale-105"
             />
           </div>
           <div className="w-full lg:w-6/12 lg:-mr-24 mt-[-40px] lg:mt-0 relative z-10 px-4 lg:px-0">
