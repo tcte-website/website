@@ -5,6 +5,7 @@ import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
 import DeferredVideo from '../components/DeferredVideo';
 
 const categories = ["All Collections", "Tea Making Experience", "Tea Library", "Café", "Events/Groups"];
+const servicesImageBase = `${import.meta.env.BASE_URL}images/services`;
 
 const allPhotos = [
   //
@@ -22,6 +23,166 @@ const allPhotos = [
   // 4. TCTE branded canister with tasting bowls — was "Local Devotion"
   { id: 4, category: "Events/Groups", src: "https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/3.jpeg", title: "Tasting Together", sub: "Events/Groups · Curated Sets", featured: true },
 
+
+  //
+  // --- RECENT SERVICE PHOTOS ---
+  //
+  {
+    id: 26,
+    category: "Tea Making Experience",
+    src: `${servicesImageBase}/build-your-own-tea-blending.webp`,
+    title: "Blending by Hand",
+    sub: "Tea Making Experience · Personalised Blend",
+    alt: "Guest blending tea leaves and botanicals during the Build Your Own Tea experience",
+    width: 1212,
+    height: 2048,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 27,
+    category: "Tea Making Experience",
+    src: `${servicesImageBase}/plantation-tour-guest.jpeg`,
+    title: "Among the Tea Plants",
+    sub: "Tea Making Experience · Plantation Tour",
+    alt: "Guest exploring tea plants during the Plantation Tour in Galle",
+    width: 720,
+    height: 1280,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 28,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-01.webp`,
+    title: "Global Tea Selection",
+    sub: "Tea Library · Premium Ceylon Tea",
+    alt: "Premium Ceylon Tea products displayed on wooden shelves in The Tea Library",
+    width: 720,
+    height: 1280,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 29,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-02.webp`,
+    title: "Wall of Ceylon Tea",
+    sub: "Tea Library · Boutique Collection",
+    alt: "Colourful Ceylon Tea packages arranged across The Tea Library shelves",
+    width: 1280,
+    height: 960,
+    objectPosition: "center",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 30,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-03.webp`,
+    title: "Colourful Tea Collections",
+    sub: "Tea Library · Sri Lankan Brands",
+    alt: "Wide selection of Sri Lankan tea brands at The Ceylon Tea Experience",
+    width: 1280,
+    height: 960,
+    objectPosition: "center",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 31,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-04.webp`,
+    title: "Curated Shelf Details",
+    sub: "Tea Library · Tea Tins and Gifts",
+    alt: "Tea tins and gift collections displayed along wooden retail shelves",
+    width: 960,
+    height: 1280,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 32,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-05.webp`,
+    title: "Boutique Tea Display",
+    sub: "Tea Library · Colourful Packages",
+    alt: "Boutique Ceylon Tea retail display with colourful packages and tins",
+    width: 1280,
+    height: 960,
+    objectPosition: "center",
+    span: "col-span-1 md:col-span-2 row-span-1",
+  },
+  {
+    id: 33,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-06.webp`,
+    title: "Regional Tea Collection",
+    sub: "Tea Library · Premium Selections",
+    alt: "Premium tea boxes, tins, and regional collections in The Tea Library",
+    width: 1280,
+    height: 960,
+    objectPosition: "center",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    id: 34,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-08.webp`,
+    title: "Tea Gifts and Tins",
+    sub: "Tea Library · Retail Collection",
+    alt: "Sri Lankan tea packages presented in a boutique retail collection",
+    width: 1280,
+    height: 960,
+    objectPosition: "center",
+    span: "col-span-1 md:col-span-2 row-span-1",
+  },
+  {
+    id: 35,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-09.webp`,
+    title: "Evening Tea Library",
+    sub: "Tea Library · Warmly Lit Shelves",
+    alt: "Warmly lit shelves featuring tea tins, boxes, and colourful packages",
+    width: 853,
+    height: 1280,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 36,
+    category: "Tea Library",
+    src: `${servicesImageBase}/tea-library-10.webp`,
+    title: "Signature Tea Books",
+    sub: "Tea Library · Gift Collection",
+    alt: "Tea books, regional teas, and gift packages displayed in The Tea Library",
+    width: 1280,
+    height: 853,
+    objectPosition: "center",
+    span: "col-span-1 md:col-span-2 row-span-1",
+  },
+  {
+    id: 37,
+    category: "Tea Library",
+    src: `${servicesImageBase}/ecommerce-tea-gift-delivery.webp`,
+    title: "Tea Gifts, Ready to Share",
+    sub: "Tea Library · Delivery Collection",
+    alt: "Ceylon Tea gift packaging prepared for delivery and worldwide ordering",
+    width: 1322,
+    height: 1190,
+    objectPosition: "center",
+    span: "col-span-1 row-span-1 md:col-span-2 md:row-span-2",
+  },
+  {
+    id: 38,
+    category: "Events/Groups",
+    src: `${servicesImageBase}/workshops-group-tea-tasting.webp`,
+    title: "Guided Group Tasting",
+    sub: "Events/Groups · Tea Workshop",
+    alt: "International guests taking part in a guided group tea-tasting workshop",
+    width: 1448,
+    height: 1086,
+    objectPosition: "55% center",
+    span: "col-span-1 row-span-1 md:col-span-2 md:row-span-2",
+  },
 
   //
   // --- GRID PHOTOS ---
@@ -100,6 +261,8 @@ export default function GalleryPage({ navigate }) {
     : allPhotos.filter(p => p.category === activeCategory);
 
   const featuredPhotos = allPhotos.filter(p => p.featured);
+  const lightboxPhotos = lightbox?.featured ? featuredPhotos : filtered;
+  const isCafeCollection = activeCategory === "Café";
 
   // Slider controls
   const scroll = (direction) => {
@@ -148,7 +311,7 @@ export default function GalleryPage({ navigate }) {
 
       {/* Featured Image Slider (Modern Carousel) */}
       <section className="py-12 relative">
-        <div className="px-8 flex justify-between items-end max-w-[1400px] mx-auto mb-6">
+        <div className="px-4 md:px-8 flex justify-between items-end max-w-[1400px] mx-auto mb-6">
           <h2 className="text-3xl font-serif font-bold text-[#1b3b22]">Featured Moments</h2>
           <div className="flex gap-3">
             <button type="button" aria-label="Show previous featured moments" onClick={() => scroll('left')} className="w-12 h-12 rounded-full border-2 border-[#806707] text-[#806707] flex items-center justify-center hover:bg-[#806707] hover:text-white transition-all duration-300">
@@ -163,20 +326,25 @@ export default function GalleryPage({ navigate }) {
         {/* Scrollable Container */}
         <div 
           ref={sliderRef}
-          className="flex overflow-x-auto snap-x snap-mandatory gap-6 px-8 pb-10 max-w-[1400px] mx-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 px-4 md:px-8 pb-10 max-w-[1400px] mx-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {featuredPhotos.map(photo => (
-            <div 
+            <button
+              type="button"
               key={`featured-${photo.id}`} 
-              className="relative min-w-[85vw] md:min-w-[60vw] lg:min-w-[40vw] h-[50vh] md:h-[60vh] snap-center rounded-xl overflow-hidden group cursor-pointer shadow-lg"
+              aria-label={`View ${photo.title}`}
+              className="relative min-w-[85vw] md:min-w-[60vw] lg:min-w-[40vw] h-[50vh] md:h-[60vh] snap-center rounded-xl overflow-hidden group cursor-pointer shadow-lg text-left"
               onClick={() => setLightbox(photo)}
             >
               <img 
                 src={photo.src} 
-                alt={photo.title} 
+                alt={photo.alt ?? photo.title}
+                width={photo.width}
+                height={photo.height}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+                style={{ objectPosition: photo.objectPosition ?? 'center' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b3b22]/90 via-[#1b3b22]/20 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90"></div>
               
@@ -185,7 +353,7 @@ export default function GalleryPage({ navigate }) {
                 <h3 className="text-white text-3xl font-serif font-bold mb-1">{photo.title}</h3>
                 <p className="text-gray-300 text-sm font-light mt-2">{photo.sub.split('·')[1]}</p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -216,13 +384,15 @@ export default function GalleryPage({ navigate }) {
       </section>
 
       {/* Category Filters - Elegant Pills */}
-      <section className="px-8 pb-10 pt-10 sticky top-[72px] z-40 bg-[#f9f8f3]/95 backdrop-blur-md border-b border-[#e8e4d9]">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-3">
+      <section className="px-4 md:px-8 py-5 md:py-7 sticky top-[72px] z-40 bg-[#f9f8f3]/95 backdrop-blur-md border-b border-[#e8e4d9]">
+        <div className="max-w-7xl mx-auto flex overflow-x-auto sm:flex-wrap sm:justify-center gap-2 md:gap-3 pb-1 sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {categories.map(cat => (
             <button
+              type="button"
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 rounded-full ${
+              aria-pressed={activeCategory === cat}
+              className={`flex-none px-4 md:px-6 py-2.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 rounded-full ${
                 activeCategory === cat
                   ? 'bg-[#1b3b22] text-white shadow-md transform scale-105'
                   : 'text-gray-500 bg-white border border-gray-200 hover:border-[#c8a951] hover:text-[#c8a951]'
@@ -236,20 +406,28 @@ export default function GalleryPage({ navigate }) {
 
       {/* Modern Bento Grid Gallery */}
       <section className="py-16 px-4 md:px-8 max-w-[1400px] mx-auto min-h-[50vh]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[250px]">
+        <div className={isCafeCollection
+          ? "grid grid-cols-1 md:grid-cols-2 gap-5 auto-rows-[270px] md:auto-rows-[320px] lg:auto-rows-[360px] max-w-[1100px] mx-auto"
+          : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[250px]"
+        }>
           {filtered.length > 0 ? filtered.map((photo, index) => (
-            <div
+            <button
+              type="button"
               key={photo.id}
-              className={`group relative overflow-hidden rounded-lg cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 ${photo.span || 'col-span-1 row-span-1'}`}
+              aria-label={`View ${photo.title}`}
+              className={`group relative overflow-hidden rounded-lg cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 text-left ${isCafeCollection ? 'col-span-1 row-span-1' : photo.span || 'col-span-1 row-span-1'}`}
               onClick={() => setLightbox(photo)}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <img
                 src={photo.src}
-                alt={photo.title}
+                alt={photo.alt ?? photo.title}
+                width={photo.width}
+                height={photo.height}
                 loading="lazy"
                 decoding="async"
                 className="w-full h-full object-cover transition-transform duration-[1.2s] ease-in-out group-hover:scale-110"
+                style={{ objectPosition: photo.objectPosition ?? 'center' }}
               />
               
               <div className="absolute inset-0 bg-[#1A3D1A]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -261,7 +439,7 @@ export default function GalleryPage({ navigate }) {
                   <p className="text-[#c8a951] font-bold text-[10px] tracking-wider uppercase drop-shadow-sm">{photo.category}</p>
                 </div>
               </div>
-            </div>
+            </button>
           )) : (
             <div className="col-span-full flex items-center justify-center h-[300px] text-gray-400 font-serif italic text-xl">
               No images currently available in this category.
@@ -287,7 +465,9 @@ export default function GalleryPage({ navigate }) {
             
             <img 
               src={lightbox.src} 
-              alt={lightbox.title} 
+              alt={lightbox.alt ?? lightbox.title}
+              width={lightbox.width}
+              height={lightbox.height}
               className="w-full max-h-[75vh] object-contain shadow-2xl rounded-sm" 
             />
             
@@ -307,9 +487,8 @@ export default function GalleryPage({ navigate }) {
                 className="pointer-events-auto bg-white/5 hover:bg-[#c8a951] border border-white/10 text-white w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
                 onClick={e => {
                   e.stopPropagation();
-                  const currentList = filtered;
-                  const idx = currentList.findIndex(p => p.id === lightbox.id);
-                  setLightbox(currentList[(idx - 1 + currentList.length) % currentList.length]);
+                  const idx = lightboxPhotos.findIndex(p => p.id === lightbox.id);
+                  setLightbox(lightboxPhotos[(idx - 1 + lightboxPhotos.length) % lightboxPhotos.length]);
                 }}
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
@@ -320,9 +499,8 @@ export default function GalleryPage({ navigate }) {
                 className="pointer-events-auto bg-white/5 hover:bg-[#c8a951] border border-white/10 text-white w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110"
                 onClick={e => {
                   e.stopPropagation();
-                  const currentList = activeCategory === "All Collections" ? allPhotos : filtered;
-                  const idx = currentList.findIndex(p => p.id === lightbox.id);
-                  setLightbox(currentList[(idx + 1) % currentList.length]);
+                  const idx = lightboxPhotos.findIndex(p => p.id === lightbox.id);
+                  setLightbox(lightboxPhotos[(idx + 1) % lightboxPhotos.length]);
                 }}
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
