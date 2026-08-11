@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 const siteUrl = 'https://www.theceylonteaexperience.com'
 const homeCanonical = `${siteUrl}/`
-const defaultImage = 'https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/17.webp'
-const defaultImageAlt = 'The Ceylon Tea Experience in Galle, Sri Lanka'
+const defaultImage = `${siteUrl}/images/tcte-social-logo.jpg`
+const defaultImageAlt = 'The Ceylon Tea Experience company logo'
 
 const metadata = {
   home: {
@@ -209,8 +209,8 @@ export default function PageMetadata({ page, post }) {
     setMeta('property', 'og:url', canonical)
     setMeta('property', 'og:image', image)
     setMeta('property', 'og:image:alt', imageAlt)
-    setMeta('property', 'og:image:width', pageMetadata.type === 'article' ? '1200' : undefined)
-    setMeta('property', 'og:image:height', pageMetadata.type === 'article' ? '630' : undefined)
+    setMeta('property', 'og:image:width', '1200')
+    setMeta('property', 'og:image:height', '630')
     setMeta('property', 'article:published_time', pageMetadata.publishedTime)
     setMeta('property', 'article:modified_time', pageMetadata.modifiedTime)
     setMeta('property', 'article:section', pageMetadata.section)
