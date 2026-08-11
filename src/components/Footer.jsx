@@ -37,11 +37,24 @@ export default function Footer({ navigate }) {
         <div>
           <h4 className="text-white font-bold mb-5 uppercase text-[10px] tracking-widest">Quick Links</h4>
           <ul className="space-y-3 text-xs">
-            {['home','about','services','gallery','contact'].map(p => (
-              <li key={p}>
-                <button onClick={() => navigate(p)} className="hover:text-[#B8960C] transition capitalize">
-                  {p === 'home' ? 'Home' : p.charAt(0).toUpperCase() + p.slice(1)}
-                </button>
+            {[
+              { key: 'home', label: 'Home' },
+              { key: 'about', label: 'About' },
+              { key: 'services', label: 'Services' },
+              { key: 'gallery', label: 'Gallery' },
+              { key: 'blog', label: 'Journal' },
+              { key: 'contact', label: 'Contact' },
+            ].map((link) => (
+              <li key={link.key}>
+                {link.key === 'blog' ? (
+                  <a href="/blog" className="hover:text-[#B8960C] transition">
+                    {link.label}
+                  </a>
+                ) : (
+                  <button onClick={() => navigate(link.key)} className="hover:text-[#B8960C] transition">
+                    {link.label}
+                  </button>
+                )}
               </li>
             ))}
           </ul>

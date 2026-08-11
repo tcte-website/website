@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 
-const canonicalUrl = 'https://www.theceylonteaexperience.com/'
+const siteUrl = 'https://www.theceylonteaexperience.com'
+const homeCanonical = `${siteUrl}/`
+const defaultImage = 'https://ceylon-tea-experience-media.s3.us-east-1.amazonaws.com/images/17.webp'
+const defaultImageAlt = 'The Ceylon Tea Experience in Galle, Sri Lanka'
 
 const metadata = {
   home: {
@@ -43,29 +46,181 @@ const metadata = {
     description:
       'Read the website, booking, experience, payment, cancellation, and visitor terms for The Ceylon Tea Experience.',
   },
+  blog: {
+    title: 'The TCTE Journal | Stories From the World of Ceylon Tea',
+    description:
+      'Travel stories, tea culture, tasting notes and guides from The Ceylon Tea Experience in Galle, Sri Lanka.',
+    canonical: `${siteUrl}/blog`,
+    image: `${siteUrl}/images/blog/visit-tcte-galle/tcte-visit-galle-og.jpg`,
+    imageAlt: 'Guests enjoying Ceylon Tea at The Ceylon Tea Experience in Galle',
+    robots: 'index, follow, max-image-preview:large',
+  },
+  notFound: {
+    title: 'Story Not Found | The TCTE Journal',
+    description: 'Return to The TCTE Journal to explore stories and guides from the world of Ceylon Tea.',
+    canonical: `${siteUrl}/blog`,
+    robots: 'noindex, follow',
+  },
 }
 
-function setMeta(selector, attribute, value) {
-  const element = document.head.querySelector(selector)
-  if (element) {
-    element.setAttribute(attribute, value)
+function ensureMeta(attribute, key) {
+  let element = document.head.querySelector(`meta[${attribute}="${key}"]`)
+  if (!element) {
+    element = document.createElement('meta')
+    element.setAttribute(attribute, key)
+    document.head.appendChild(element)
   }
+  return element
 }
 
-export default function PageMetadata({ page }) {
-  useEffect(() => {
-    const pageMetadata = metadata[page] ?? metadata.home
-    document.title = pageMetadata.title
+function setMeta(attribute, key, value) {
+  const existing = document.head.querySelector(`meta[${attribute}="${key}"]`)
+  if (!value) {
+    existing?.remove()
+    return
+  }
 
-    setMeta('meta[name="description"]', 'content', pageMetadata.description)
-    setMeta('meta[name="robots"]', 'content', 'index, follow')
-    setMeta('link[rel="canonical"]', 'href', canonicalUrl)
-    setMeta('meta[property="og:title"]', 'content', pageMetadata.title)
-    setMeta('meta[property="og:description"]', 'content', pageMetadata.description)
-    setMeta('meta[property="og:url"]', 'content', canonicalUrl)
-    setMeta('meta[name="twitter:title"]', 'content', pageMetadata.title)
-    setMeta('meta[name="twitter:description"]', 'content', pageMetadata.description)
-  }, [page])
+  ensureMeta(attribute, key).setAttribute('content', value)
+}
+
+function setCanonical(value) {
+  let canonical = document.head.querySelector('link[rel="canonical"]')
+  if (!canonical) {
+    canonical = document.createElement('link')
+    canonical.setAttribute('rel', 'canonical')
+    document.head.appendChild(canonical)
+  }
+  canonical.setAttribute('href', value)
+}
+
+function getPageMetadata(page, post) {
+  if (page === 'blogArticle' && post) {
+    return {
+      title: post.seoTitle,
+      description: post.description,
+      canonical: `${siteUrl}${post.path}`,
+      image: `${siteUrl}${post.socialImage}`,
+      imageAlt: post.socialImageAlt,
+      robots: 'index, follow, max-image-preview:large',
+      type: 'article',
+      publishedTime: post.datePublished,
+      modifiedTime: post.dateModified,
+      section: post.category,
+    }
+  }
+
+  return metadata[page] ?? metadata.home
+}
+
+function updateStructuredData(page, post) {
+  const scriptId = 'tcte-blog-structured-data'
+  let script = document.getElementById(scriptId)
+
+  if (page !== 'blogArticle' || !post) {
+    script?.remove()
+    return
+  }
+
+  if (!script) {
+    script = document.createElement('script')
+    script.id = scriptId
+    script.type = 'application/ld+json'
+    document.head.appendChild(script)
+  }
+
+  const canonical = `${siteUrl}${post.path}`
+  const socialImage = `${siteUrl}${post.socialImage}`
+
+  script.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${canonical}#article`,
+        headline: post.title,
+        description: post.description,
+        image: [socialImage],
+        datePublished: post.datePublished,
+        dateModified: post.dateModified,
+        author: {
+          '@type': 'Organization',
+          name: post.author,
+          url: homeCanonical,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'The Ceylon Tea Experience',
+          url: homeCanonical,
+          logo: {
+            '@type': 'ImageObject',
+            url: `${siteUrl}/logo.webp`,
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonical,
+        },
+        articleSection: post.category,
+        keywords: post.tags.join(', '),
+        inLanguage: 'en',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: homeCanonical,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Journal',
+            item: `${siteUrl}/blog`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: post.title,
+            item: canonical,
+          },
+        ],
+      },
+    ],
+  })
+}
+
+export default function PageMetadata({ page, post }) {
+  useEffect(() => {
+    const pageMetadata = getPageMetadata(page, post)
+    const canonical = pageMetadata.canonical ?? homeCanonical
+    const image = pageMetadata.image ?? defaultImage
+    const imageAlt = pageMetadata.imageAlt ?? defaultImageAlt
+
+    document.title = pageMetadata.title
+    setCanonical(canonical)
+    setMeta('name', 'description', pageMetadata.description)
+    setMeta('name', 'robots', pageMetadata.robots ?? 'index, follow')
+    setMeta('property', 'og:type', pageMetadata.type ?? 'website')
+    setMeta('property', 'og:title', pageMetadata.title)
+    setMeta('property', 'og:description', pageMetadata.description)
+    setMeta('property', 'og:url', canonical)
+    setMeta('property', 'og:image', image)
+    setMeta('property', 'og:image:alt', imageAlt)
+    setMeta('property', 'og:image:width', pageMetadata.type === 'article' ? '1200' : undefined)
+    setMeta('property', 'og:image:height', pageMetadata.type === 'article' ? '630' : undefined)
+    setMeta('property', 'article:published_time', pageMetadata.publishedTime)
+    setMeta('property', 'article:modified_time', pageMetadata.modifiedTime)
+    setMeta('property', 'article:section', pageMetadata.section)
+    setMeta('name', 'twitter:card', 'summary_large_image')
+    setMeta('name', 'twitter:title', pageMetadata.title)
+    setMeta('name', 'twitter:description', pageMetadata.description)
+    setMeta('name', 'twitter:image', image)
+    setMeta('name', 'twitter:image:alt', imageAlt)
+    updateStructuredData(page, post)
+  }, [page, post])
 
   return null
 }

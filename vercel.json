@@ -7,6 +7,26 @@
     {
       "source": "/partners/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/why-you-should-visit-the-ceylon-tea-experience-in-galle",
+      "destination": "/blog/why-you-should-visit-the-ceylon-tea-experience-in-galle/index.html"
+    },
+    {
+      "source": "/blog/why-you-should-visit-the-ceylon-tea-experience-in-galle/",
+      "destination": "/blog/why-you-should-visit-the-ceylon-tea-experience-in-galle/index.html"
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/index.html"
     }
   ],
   "headers": [

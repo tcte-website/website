@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import { WhatsAppInquiryModal } from './WhatsAppModal'
 
-export default function Nav({ navigate, currentPage }) {
+export default function Nav({ navigate, currentPage, onBookNow }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [waModalOpen, setWaModalOpen] = useState(false)
+  const usesSharedBookingModal = typeof onBookNow === 'function'
+  const openBookingModal = usesSharedBookingModal
+    ? onBookNow
+    : () => setWaModalOpen(true)
 
   const links = [
     { label: 'Home', key: 'home' },
     { label: 'About', key: 'about' },
     { label: 'Services', key: 'services' },
     { label: 'Gallery', key: 'gallery' },
+    { label: 'Journal', key: 'blog' },
     { label: 'Contact', key: 'contact' },
   ]
 
@@ -30,7 +35,7 @@ export default function Nav({ navigate, currentPage }) {
       >
         Skip to main content
       </a>
-      <nav aria-label="Primary navigation" className="flex justify-between items-center px-8 py-4 bg-[#F9F6F0] border-b border-gray-200 sticky top-0 z-50">
+      <nav aria-label="Primary navigation" className="flex justify-between items-center px-4 lg:px-8 py-4 bg-[#F9F6F0] border-b border-gray-200 sticky top-0 z-50">
         <button
           type="button"
           className="text-2xl font-serif font-bold text-[#2D6A2D] cursor-pointer flex items-center"
@@ -47,27 +52,39 @@ export default function Nav({ navigate, currentPage }) {
         </button>
 
         {/* Desktop Links */}
-        <ul className="hidden md:flex gap-8 text-xs font-sans font-bold uppercase tracking-wider text-gray-600">
+        <ul className="hidden md:flex gap-4 lg:gap-8 text-xs font-sans font-bold uppercase tracking-wider text-gray-600">
           {links.map((l) => (
             <li key={l.key}>
-              <button
-                type="button"
-                onClick={() => navigate(l.key)}
-                aria-current={currentPage === l.key ? 'page' : undefined}
-                className={`cursor-pointer hover:text-[#2D6A2D] transition ${
-                  currentPage === l.key ? 'text-[#2D6A2D] border-b-2 border-[#2D6A2D] pb-1' : ''
-                }`}
-              >
-                {l.label}
-              </button>
+              {l.key === 'blog' ? (
+                <a
+                  href="/blog"
+                  aria-current={currentPage === l.key ? 'page' : undefined}
+                  className={`cursor-pointer hover:text-[#2D6A2D] transition ${
+                    currentPage === l.key ? 'text-[#2D6A2D] border-b-2 border-[#2D6A2D] pb-1' : ''
+                  }`}
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => navigate(l.key)}
+                  aria-current={currentPage === l.key ? 'page' : undefined}
+                  className={`cursor-pointer hover:text-[#2D6A2D] transition ${
+                    currentPage === l.key ? 'text-[#2D6A2D] border-b-2 border-[#2D6A2D] pb-1' : ''
+                  }`}
+                >
+                  {l.label}
+                </button>
+              )}
             </li>
           ))}
         </ul>
 
         {/* Prominent Book Now CTA */}
         <button
-          onClick={() => setWaModalOpen(true)}
-          className="hidden md:block bg-[#2D6A2D] text-white px-6 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#1A3D1A] transition cursor-pointer rounded-sm shadow-md"
+          onClick={openBookingModal}
+          className="hidden md:block bg-[#2D6A2D] text-white px-4 lg:px-6 py-3 text-xs font-bold uppercase tracking-wider hover:bg-[#1A3D1A] transition cursor-pointer rounded-sm shadow-md"
         >
           Book Now
         </button>
@@ -87,20 +104,32 @@ export default function Nav({ navigate, currentPage }) {
         {menuOpen && (
           <div id="mobile-navigation" className="absolute top-[100%] left-0 right-0 bg-[#F9F6F0] border-b border-gray-200 md:hidden z-50 shadow-lg">
             {links.map((l) => (
-              <button
-                type="button"
-                key={l.key}
-                onClick={() => { navigate(l.key); setMenuOpen(false) }}
-                aria-current={currentPage === l.key ? 'page' : undefined}
-                className="block w-full px-8 py-4 text-left text-xs font-sans font-bold uppercase tracking-wider text-gray-600 hover:text-[#2D6A2D] hover:bg-gray-50 cursor-pointer border-b border-gray-100"
-              >
-                {l.label}
-              </button>
+              l.key === 'blog' ? (
+                <a
+                  key={l.key}
+                  href="/blog"
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={currentPage === l.key ? 'page' : undefined}
+                  className="block w-full px-8 py-4 text-left text-xs font-sans font-bold uppercase tracking-wider text-gray-600 hover:text-[#2D6A2D] hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  key={l.key}
+                  onClick={() => { navigate(l.key); setMenuOpen(false) }}
+                  aria-current={currentPage === l.key ? 'page' : undefined}
+                  className="block w-full px-8 py-4 text-left text-xs font-sans font-bold uppercase tracking-wider text-gray-600 hover:text-[#2D6A2D] hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                >
+                  {l.label}
+                </button>
+              )
             ))}
             <div className="px-8 py-6">
               {/* Mobile Book Now */}
               <button
-                onClick={() => { setWaModalOpen(true); setMenuOpen(false); }}
+                onClick={() => { openBookingModal(); setMenuOpen(false); }}
                 className="w-full bg-[#2D6A2D] text-white py-3 text-xs font-bold uppercase tracking-wider rounded-sm shadow-md"
               >
                 Book Now
@@ -110,10 +139,12 @@ export default function Nav({ navigate, currentPage }) {
         )}
       </nav>
 
-      <WhatsAppInquiryModal
-        isOpen={waModalOpen}
-        onClose={() => setWaModalOpen(false)}
-      />
+      {!usesSharedBookingModal && (
+        <WhatsAppInquiryModal
+          isOpen={waModalOpen}
+          onClose={() => setWaModalOpen(false)}
+        />
+      )}
     </>
   )
 }
