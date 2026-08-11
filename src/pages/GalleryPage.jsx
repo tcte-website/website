@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
@@ -6,6 +6,7 @@ import DeferredVideo from '../components/DeferredVideo';
 
 const categories = ["All Collections", "Tea Making Experience", "Tea Library", "Café", "Events/Groups"];
 const servicesImageBase = `${import.meta.env.BASE_URL}images/services`;
+const journalImageBase = `${import.meta.env.BASE_URL}images/blog/visit-tcte-galle`;
 
 const allPhotos = [
   //
@@ -27,18 +28,6 @@ const allPhotos = [
   //
   // --- RECENT SERVICE PHOTOS ---
   //
-  {
-    id: 26,
-    category: "Tea Making Experience",
-    src: `${servicesImageBase}/build-your-own-tea-blending.webp`,
-    title: "Blending by Hand",
-    sub: "Tea Making Experience · Personalised Blend",
-    alt: "Guest blending tea leaves and botanicals during the Build Your Own Tea experience",
-    width: 1212,
-    height: 2048,
-    objectPosition: "center",
-    span: "col-span-1 row-span-2",
-  },
   {
     id: 27,
     category: "Tea Making Experience",
@@ -64,6 +53,34 @@ const allPhotos = [
     span: "col-span-1 row-span-2",
   },
   {
+    id: 39,
+    category: "Events/Groups",
+    src: `${journalImageBase}/tcte-guests-and-team.webp`,
+    srcSet: `${journalImageBase}/tcte-guests-and-team-640.webp 640w, ${journalImageBase}/tcte-guests-and-team.webp 720w`,
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+    title: "A Warm TCTE Welcome",
+    sub: "Events/Groups · Guest and Team Moment",
+    alt: "A visitor with the TCTE team at The Ceylon Tea Experience in Galle",
+    width: 720,
+    height: 1280,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 40,
+    category: "Tea Making Experience",
+    src: `${journalImageBase}/tcte-hands-on-tea-processing-01.webp`,
+    srcSet: `${journalImageBase}/tcte-hands-on-tea-processing-01-640.webp 640w, ${journalImageBase}/tcte-hands-on-tea-processing-01.webp 1080w`,
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+    title: "Hands-On Tea Processing",
+    sub: "Tea Making Experience · Interactive Craft",
+    alt: "Guests operating tea-processing equipment during a hands-on Ceylon Tea experience in Galle",
+    width: 1080,
+    height: 1440,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
     id: 29,
     category: "Tea Library",
     src: `${servicesImageBase}/tea-library-02.webp`,
@@ -76,6 +93,20 @@ const allPhotos = [
     span: "col-span-1 row-span-1",
   },
   {
+    id: 41,
+    category: "Tea Making Experience",
+    src: `${journalImageBase}/tcte-hands-on-tea-processing-02.webp`,
+    srcSet: `${journalImageBase}/tcte-hands-on-tea-processing-02-640.webp 640w, ${journalImageBase}/tcte-hands-on-tea-processing-02.webp 1080w`,
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+    title: "Making Tea Together",
+    sub: "Tea Making Experience · Shared Discovery",
+    alt: "Visitors using tea-processing equipment together during an interactive Ceylon Tea session",
+    width: 1080,
+    height: 1440,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
     id: 30,
     category: "Tea Library",
     src: `${servicesImageBase}/tea-library-03.webp`,
@@ -86,6 +117,46 @@ const allPhotos = [
     height: 960,
     objectPosition: "center",
     span: "col-span-1 row-span-1",
+  },
+  {
+    id: 42,
+    category: "Tea Making Experience",
+    src: `${journalImageBase}/tcte-tea-tasting-guests.webp`,
+    srcSet: `${journalImageBase}/tcte-tea-tasting-guests-640.webp 640w, ${journalImageBase}/tcte-tea-tasting-guests.webp 1080w`,
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+    title: "Preparing Ceylon Tea",
+    sub: "Tea Making Experience · Guided Tasting",
+    alt: "Visitors preparing Ceylon Tea during an interactive tea experience",
+    width: 1080,
+    height: 1440,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 26,
+    category: "Tea Making Experience",
+    src: `${servicesImageBase}/build-your-own-tea-blending.webp`,
+    title: "Blending by Hand",
+    sub: "Tea Making Experience · Personalised Blend",
+    alt: "Guest blending tea leaves and botanicals during the Build Your Own Tea experience",
+    width: 1212,
+    height: 2048,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    id: 43,
+    category: "Café",
+    src: `${journalImageBase}/tcte-guests-enjoying-ceylon-tea.webp`,
+    srcSet: `${journalImageBase}/tcte-guests-enjoying-ceylon-tea-640.webp 640w, ${journalImageBase}/tcte-guests-enjoying-ceylon-tea.webp 1080w`,
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+    title: "A Freshly Brewed Moment",
+    sub: "Café · Ceylon Tea Together",
+    alt: "Guests enjoying freshly brewed Ceylon Tea at The Ceylon Tea Experience",
+    width: 1080,
+    height: 1440,
+    objectPosition: "center",
+    span: "col-span-1 row-span-2",
   },
   {
     id: 31,
@@ -255,6 +326,8 @@ export default function GalleryPage({ navigate }) {
   const [activeCategory, setActiveCategory] = useState("All Collections");
   const [lightbox, setLightbox] = useState(null);
   const sliderRef = useRef(null);
+  const lightboxCloseRef = useRef(null);
+  const previousFocusRef = useRef(null);
   // Filter logic
   const filtered = activeCategory === "All Collections"
     ? allPhotos.filter(p => !p.featured)
@@ -263,6 +336,44 @@ export default function GalleryPage({ navigate }) {
   const featuredPhotos = allPhotos.filter(p => p.featured);
   const lightboxPhotos = lightbox?.featured ? featuredPhotos : filtered;
   const isCafeCollection = activeCategory === "Café";
+
+  useEffect(() => {
+    if (!lightbox) return undefined;
+
+    previousFocusRef.current = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    lightboxCloseRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setLightbox(null);
+        return;
+      }
+
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+      setLightbox((currentPhoto) => {
+        if (!currentPhoto) return currentPhoto;
+        const photos = currentPhoto.featured
+          ? allPhotos.filter((photo) => photo.featured)
+          : activeCategory === "All Collections"
+            ? allPhotos.filter((photo) => !photo.featured)
+            : allPhotos.filter((photo) => photo.category === activeCategory);
+        const currentIndex = photos.findIndex((photo) => photo.id === currentPhoto.id);
+        const offset = event.key === 'ArrowLeft' ? -1 : 1;
+        return photos[(currentIndex + offset + photos.length) % photos.length];
+      });
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+      previousFocusRef.current?.focus();
+    };
+  }, [activeCategory, lightbox]);
 
   // Slider controls
   const scroll = (direction) => {
@@ -338,6 +449,8 @@ export default function GalleryPage({ navigate }) {
             >
               <img 
                 src={photo.src} 
+                srcSet={photo.srcSet}
+                sizes={photo.sizes}
                 alt={photo.alt ?? photo.title}
                 width={photo.width}
                 height={photo.height}
@@ -421,6 +534,8 @@ export default function GalleryPage({ navigate }) {
             >
               <img
                 src={photo.src}
+                srcSet={photo.srcSet}
+                sizes={photo.sizes}
                 alt={photo.alt ?? photo.title}
                 width={photo.width}
                 height={photo.height}
@@ -451,11 +566,16 @@ export default function GalleryPage({ navigate }) {
       {/* Enhanced Fullscreen Lightbox */}
       {lightbox && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${lightbox.title} image viewer`}
           className="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-4 transition-opacity duration-300"
           onClick={() => setLightbox(null)}
         >
           <div className="relative max-w-6xl w-full flex flex-col items-center" onClick={e => e.stopPropagation()}>
             <button
+              ref={lightboxCloseRef}
+              type="button"
               onClick={() => setLightbox(null)}
               className="absolute -top-12 right-0 md:-right-12 text-white/50 text-4xl hover:text-[#c8a951] transition-colors"
               aria-label="Close image viewer"

@@ -12,7 +12,11 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy'))
 const TermsConditions = lazy(() => import('./pages/TermsConditions'))
 const PartnersPage = lazy(() => import('./pages/PartnersPage'))
+const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'))
+const BlogArticlePage = lazy(() => import('./pages/BlogArticlePage'))
+const BlogNotFoundPage = lazy(() => import('./pages/BlogNotFoundPage'))
 
+const articlePath = '/blog/why-you-should-visit-the-ceylon-tea-experience-in-galle'
 const validPages = ['home', 'about', 'services', 'gallery', 'contact', 'privacy', 'refund', 'terms']
 
 const publicPages = {
@@ -31,17 +35,32 @@ function getPageFromHash() {
   return validPages.includes(hash) ? hash : 'home'
 }
 
-function getIsPartnersRoute() {
+function getDirectRoute() {
   const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
-  return pathname === '/partners'
+
+  if (pathname === '/partners') return 'partners'
+  if (pathname === '/blog') return 'blog'
+  if (pathname === articlePath) return 'blogArticle'
+  if (pathname.startsWith('/blog/')) return 'blogNotFound'
+  return null
 }
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(getPageFromHash)
-  const [isPartnersRoute, setIsPartnersRoute] = useState(getIsPartnersRoute)
+  const [directRoute, setDirectRoute] = useState(getDirectRoute)
 
   const navigate = (page) => {
+    if (page === 'blog') {
+      window.location.assign('/blog')
+      return
+    }
+
     if (!validPages.includes(page)) return
+
+    if (getDirectRoute()) {
+      window.location.assign(page === 'home' ? '/' : `/#${page}`)
+      return
+    }
 
     window.location.hash = page
     setCurrentPage(page)
@@ -53,7 +72,11 @@ export default function App() {
       setCurrentPage(getPageFromHash())
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-    const handlePopState = () => setIsPartnersRoute(getIsPartnersRoute())
+
+    const handlePopState = () => {
+      setDirectRoute(getDirectRoute())
+      setCurrentPage(getPageFromHash())
+    }
 
     window.addEventListener('hashchange', handleHashChange)
     window.addEventListener('popstate', handlePopState)
@@ -64,10 +87,34 @@ export default function App() {
     }
   }, [])
 
-  if (isPartnersRoute) {
+  if (directRoute === 'partners') {
     return (
       <Suspense fallback={<Loading />}>
         <PartnersPage />
+      </Suspense>
+    )
+  }
+
+  if (directRoute === 'blog') {
+    return (
+      <Suspense fallback={<Loading />}>
+        <BlogIndexPage navigate={navigate} />
+      </Suspense>
+    )
+  }
+
+  if (directRoute === 'blogArticle') {
+    return (
+      <Suspense fallback={<Loading />}>
+        <BlogArticlePage navigate={navigate} />
+      </Suspense>
+    )
+  }
+
+  if (directRoute === 'blogNotFound') {
+    return (
+      <Suspense fallback={<Loading />}>
+        <BlogNotFoundPage navigate={navigate} />
       </Suspense>
     )
   }

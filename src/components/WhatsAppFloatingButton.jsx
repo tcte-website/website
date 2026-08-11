@@ -1,20 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WhatsAppInquiryModal } from './WhatsAppModal';
 
-function WhatsAppFloatingButton() {
+function WhatsAppFloatingButton({ avoidSelectors = [], onOpen }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSuppressed, setIsSuppressed] = useState(false);
+  const usesSharedBookingModal = typeof onOpen === 'function';
+  const openBookingModal = usesSharedBookingModal ? onOpen : () => setIsOpen(true);
+
+  useEffect(() => {
+    if (!avoidSelectors.length) return undefined;
+
+    const targets = avoidSelectors.flatMap((selector) => [
+      ...document.querySelectorAll(selector),
+    ]);
+    const visibility = new Map(targets.map((target) => [target, false]));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => visibility.set(entry.target, entry.isIntersecting));
+      setIsSuppressed([...visibility.values()].some(Boolean));
+    });
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [avoidSelectors]);
   
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div
+        className={`fixed bottom-8 right-8 z-50 transition-opacity duration-200 motion-reduce:transition-none ${
+          isSuppressed ? 'pointer-events-none opacity-0' : 'opacity-100'
+        }`}
+        aria-hidden={isSuppressed || undefined}
+      >
         <button
           type="button"
-          onClick={() => setIsOpen(true)}
+          onClick={openBookingModal}
           className="group flex items-center gap-3 bg-[#25D366] text-[#0B361D] px-5 py-4 rounded-full shadow-[0_10px_25px_rgba(37,211,102,0.4)] hover:shadow-[0_15px_35px_rgba(37,211,102,0.5)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
           aria-label="Chat on WhatsApp — open booking options"
           aria-haspopup="dialog"
-          aria-expanded={isOpen}
+          aria-expanded={usesSharedBookingModal ? undefined : isOpen}
+          tabIndex={isSuppressed ? -1 : undefined}
         >
           <span className="font-bold text-sm tracking-wide hidden sm:block">Chat on WhatsApp</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -23,7 +48,9 @@ function WhatsAppFloatingButton() {
         </button>
       </div>
 
-      <WhatsAppInquiryModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {!usesSharedBookingModal && (
+        <WhatsAppInquiryModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      )}
     </>
   );
 }
