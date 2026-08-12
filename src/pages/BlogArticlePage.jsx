@@ -22,7 +22,10 @@ const WHATSAPP_AVOID_SELECTORS = [
 
 function trackCta(action) {
   if (typeof window.gtag === 'function') {
-    window.gtag('event', 'blog_article_cta_click', { action })
+    window.gtag('event', 'blog_article_cta_click', {
+      send_to: 'G-B23WLR63LD',
+      action,
+    })
   }
 }
 

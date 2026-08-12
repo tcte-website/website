@@ -44,11 +44,20 @@ export const inquiryOptions = [
 ]
 
 const WA_NUMBER = '94702900500'
+const GA4_MEASUREMENT_ID = 'G-B23WLR63LD'
 
-export function openWhatsApp(message) {
+export function openWhatsApp(message, eventContext = {}) {
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`
 
   try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'whatsapp_enquiry', {
+        send_to: GA4_MEASUREMENT_ID,
+        source: eventContext.source ?? 'booking_flow',
+        experience: eventContext.experience ?? 'not_specified',
+      })
+    }
+
     if (typeof window.gtag_report_conversion === 'function') {
       window.gtag_report_conversion()
     }

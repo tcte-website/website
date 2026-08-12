@@ -3,7 +3,10 @@ import { Check, Copy, Share2 } from 'lucide-react'
 
 function trackShare(method) {
   if (typeof window.gtag === 'function') {
-    window.gtag('event', 'blog_share', { method })
+    window.gtag('event', 'blog_share', {
+      send_to: 'G-B23WLR63LD',
+      method,
+    })
   }
 }
 
@@ -57,7 +60,7 @@ export default function ArticleShare({ post }) {
           <Share2 aria-hidden="true" size={17} />
           Share
         </button>
-        <button type="button" onClick={copyLink} aria-label="Copy article link">
+        <button type="button" onClick={copyLink} aria-label="Copy link to article">
           {copied ? <Check aria-hidden="true" size={17} /> : <Copy aria-hidden="true" size={17} />}
           {copied ? 'Copied' : 'Copy link'}
         </button>

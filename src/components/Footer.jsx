@@ -17,7 +17,7 @@ export default function Footer({ navigate }) {
           {/* Find Us / Map Section */}
           <div>
             <h4 className="text-white font-bold mb-3 uppercase text-[10px] tracking-widest">Find Us</h4>
-            <p className="text-xs mb-2">Galle, Sri Lanka</p>
+            <p className="text-xs mb-2">146A Sea Street, Galle 80000, Sri Lanka</p>
             <a 
               href="https://www.google.com/maps/place/The+Ceylon+Tea+Experience+-+Galle/data=!4m7!3m6!1s0x3ae1736b35262d13:0x993881923260c1bd!8m2!3d6.0371585!4d80.2245897!16s%2Fg%2F11ytzjgzgf!19sChIJEy0mNWtz4ToRvcFgMpKBOJk?authuser=0&hl=en&rclk=1" 
               target="_blank" 
