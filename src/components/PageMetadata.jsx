@@ -2,8 +2,10 @@ import { useEffect } from 'react'
 
 const siteUrl = 'https://www.theceylonteaexperience.com'
 const homeCanonical = `${siteUrl}/`
+const ga4MeasurementId = 'G-B23WLR63LD'
 const defaultImage = `${siteUrl}/images/tcte-social-logo.jpg`
 const defaultImageAlt = 'The Ceylon Tea Experience company logo'
+let lastTrackedLocation = typeof window === 'undefined' ? '' : window.location.href
 
 const metadata = {
   home: {
@@ -220,6 +222,17 @@ export default function PageMetadata({ page, post }) {
     setMeta('name', 'twitter:image', image)
     setMeta('name', 'twitter:image:alt', imageAlt)
     updateStructuredData(page, post)
+
+    const currentLocation = window.location.href
+    if (currentLocation !== lastTrackedLocation && typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        send_to: ga4MeasurementId,
+        page_title: pageMetadata.title,
+        page_location: currentLocation,
+        page_referrer: lastTrackedLocation,
+      })
+    }
+    lastTrackedLocation = currentLocation
   }, [page, post])
 
   return null

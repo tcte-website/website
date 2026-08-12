@@ -59,7 +59,7 @@ export default function Nav({ navigate, currentPage, onBookNow }) {
                 <a
                   href="/blog"
                   aria-current={currentPage === l.key ? 'page' : undefined}
-                  className={`cursor-pointer hover:text-[#2D6A2D] transition ${
+                  className={`normal-case cursor-pointer hover:text-[#2D6A2D] transition ${
                     currentPage === l.key ? 'text-[#2D6A2D] border-b-2 border-[#2D6A2D] pb-1' : ''
                   }`}
                 >
@@ -110,7 +110,7 @@ export default function Nav({ navigate, currentPage, onBookNow }) {
                   href="/blog"
                   onClick={() => setMenuOpen(false)}
                   aria-current={currentPage === l.key ? 'page' : undefined}
-                  className="block w-full px-8 py-4 text-left text-xs font-sans font-bold uppercase tracking-wider text-gray-600 hover:text-[#2D6A2D] hover:bg-gray-50 cursor-pointer border-b border-gray-100"
+                  className="block w-full px-8 py-4 text-left text-xs font-sans font-bold normal-case tracking-wider text-gray-600 hover:text-[#2D6A2D] hover:bg-gray-50 cursor-pointer border-b border-gray-100"
                 >
                   {l.label}
                 </a>

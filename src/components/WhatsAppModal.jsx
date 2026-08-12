@@ -48,9 +48,12 @@ export function WhatsAppInquiryModal({ isOpen, onClose }) {
     }
   }, [isOpen, onClose])
 
-  const handleOptionClick = (message) => {
+  const handleOptionClick = (option) => {
     onClose();
-    openWhatsApp(message);
+    openWhatsApp(option.message, {
+      source: 'booking_modal',
+      experience: option.title,
+    });
   };
 
   if (!isOpen) return null;
@@ -99,7 +102,7 @@ export function WhatsAppInquiryModal({ isOpen, onClose }) {
               <button
                 type="button"
                 key={i}
-                onClick={() => handleOptionClick(option.message)}
+                onClick={() => handleOptionClick(option)}
                 className="w-full flex items-center gap-4 p-4 hover:bg-[#F9F6F0] rounded-xl transition-all text-left group border border-transparent hover:border-[#25D366]/30 mb-1"
               >
                 <div className="text-3xl flex-shrink-0">{option.icon}</div>

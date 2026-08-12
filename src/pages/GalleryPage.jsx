@@ -388,6 +388,8 @@ export default function GalleryPage({ navigate }) {
     <div className="min-h-screen font-sans text-gray-800 bg-[#f9f8f3]">
       <Nav navigate={navigate} currentPage="gallery" />
 
+      <main>
+
       {/* Modern Hero with Fading Gradient */}
       <section id="main-content" className="relative min-h-[60vh] flex items-center justify-center pt-32 pb-16 px-8 text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -443,7 +445,6 @@ export default function GalleryPage({ navigate }) {
             <button
               type="button"
               key={`featured-${photo.id}`} 
-              aria-label={`View ${photo.title}`}
               className="relative min-w-[85vw] md:min-w-[60vw] lg:min-w-[40vw] h-[50vh] md:h-[60vh] snap-center rounded-xl overflow-hidden group cursor-pointer shadow-lg text-left"
               onClick={() => setLightbox(photo)}
             >
@@ -462,7 +463,7 @@ export default function GalleryPage({ navigate }) {
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b3b22]/90 via-[#1b3b22]/20 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90"></div>
               
               <div className="absolute bottom-0 left-0 p-8 transform translate-y-2 transition-transform duration-500 group-hover:translate-y-0">
-                <p className="bg-[#c8a951] inline-block px-3 py-1 rounded-sm text-white text-[10px] font-bold tracking-widest uppercase mb-3">{photo.category}</p>
+                <p className="bg-[#c8a951] inline-block px-3 py-1 rounded-sm text-[#1A3D1A] text-[10px] font-bold tracking-widest uppercase mb-3">{photo.category}</p>
                 <h3 className="text-white text-3xl font-serif font-bold mb-1">{photo.title}</h3>
                 <p className="text-gray-300 text-sm font-light mt-2">{photo.sub.split('·')[1]}</p>
               </div>
@@ -527,7 +528,6 @@ export default function GalleryPage({ navigate }) {
             <button
               type="button"
               key={photo.id}
-              aria-label={`View ${photo.title}`}
               className={`group relative overflow-hidden rounded-lg cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 text-left ${isCafeCollection ? 'col-span-1 row-span-1' : photo.span || 'col-span-1 row-span-1'}`}
               onClick={() => setLightbox(photo)}
               style={{ animationDelay: `${index * 100}ms` }}
@@ -592,7 +592,7 @@ export default function GalleryPage({ navigate }) {
             />
             
             <div className="mt-8 text-center max-w-2xl">
-              <span className="bg-[#c8a951] inline-block px-3 py-1 rounded-sm text-white text-[10px] font-bold tracking-[0.2em] uppercase mb-3">
+              <span className="bg-[#c8a951] inline-block px-3 py-1 rounded-sm text-[#1A3D1A] text-[10px] font-bold tracking-[0.2em] uppercase mb-3">
                 {lightbox.category}
               </span>
               <h3 className="text-white font-serif text-3xl font-bold mb-3">{lightbox.title}</h3>
@@ -650,7 +650,7 @@ export default function GalleryPage({ navigate }) {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
               href="mailto:reservations@theceylonteaexperience.com"
-              className="bg-[#c8a951] text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#c8a951] transition-all duration-300 shadow-md"
+              className="bg-[#c8a951] text-[#1A3D1A] px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#806707] transition-all duration-300 shadow-md"
             >
               Reserve Your Experience
             </a>
@@ -663,6 +663,7 @@ export default function GalleryPage({ navigate }) {
           </div>
         </div>
       </section>
+      </main>
       <WhatsAppFloatingButton />
 
       <Footer navigate={navigate} />
